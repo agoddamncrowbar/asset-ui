@@ -8,9 +8,15 @@ const modules = [
     adminOnly: false,
   },
   {
+    name:"Inspection",
+    path:"/inspections",
+    description:"Asset Inspection Lifecycle",
+    adminOnly:true,
+  },
+  {
     name: "Categories",
     path: "/categories",
-    description: "Asset classification and grouping",
+    description: "Asset classification",
     adminOnly: true,
   },
   {
@@ -29,7 +35,7 @@ const modules = [
     name: "Assignments",
     path: "/assignments",
     description: "Track asset allocations",
-    adminOnly: false,
+    adminOnly: true,
   },
   {
     name: "Users",
@@ -37,6 +43,18 @@ const modules = [
     description: "User management and roles",
     adminOnly: true,
   },
+  {
+    name: "Locations",
+    path: "/locations",
+    description: "Manage asset locations",
+    adminOnly: true,
+  },
+  {
+    name: "Maintenance",
+    path: "/maintenance",
+    description: "Asset Maintenance",
+    adminOnly: true,
+  }
 ];
 
 export default function Dashboard() {
@@ -55,7 +73,7 @@ export default function Dashboard() {
             Asset Management Dashboard
           </h1>
 
-          <div className="text-sm text-slate-500">Overview</div>
+          <div className="text-blue-500 hover:text-blue-700 pr-3 pl-3 rounded-sm font-semibold border-2 border-blue-500 hover:border-yellow-400"><Link to={"/audits"}>Audits</Link></div>
         </div>
       </header>
 

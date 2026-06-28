@@ -1,9 +1,26 @@
 import { useEffect, useState } from "react";
-import { fetchAssets, type Asset } from "../api/assets";
+import { searchAssets, fetchAssets } from "../api/assetService";
+import type { Asset } from "../api/assets";
+import AppLoader from "../components/loading/AppLoader";
+
 import { useAuth } from "../auth/useAuth";
+
 import Modal from "../components/ui/Modal";
 import AssignAssetModal from "../components/assets/AssignAssetModal";
-import AppLoader from "../components/loading/AppLoader";
+import CreateAssetModal from "../components/assets/CreateAssetModal";
+import AssetsHeader from "../components/assets/AssetsHeader";
+import AssetsTable from "../components/assets/AssetsTable";
+
+import { createAsset, type CreateAssetPayload,} from "../api/assetService";
+import { getCategories,} from "../api/categoryService";
+import { getDepartments,} from "../api/departmentService";
+import { getLocations,} from "../api/locationService";
+
+import type { Category } from "../api/category";
+import type { Department } from "../api/department";
+import type { Location } from "../api/location";
+
+
 export default function AssetsPage() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [assignOpen, setAssignOpen] = useState(false);
@@ -14,8 +31,21 @@ export default function AssetsPage() {
   const isAdmin = user?.role?.toLowerCase() === "admin";
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { token } = useAuth();
 
+  const [createOpen, setCreateOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
 
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [search, setSearch] = useState("");
+
+  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [departmentId, setDepartmentId] = useState<number | undefined>();
+  const [locationId, setLocationId] = useState<number | undefined>();
+  const [conditionStatus, setConditionStatus] = useState("");
+  const [assetStatus, setAssetStatus] = useState("");
   const handleView = (asset: Asset) => {
     setSelectedAsset(asset);
     setIsModalOpen(true);
@@ -24,12 +54,26 @@ export default function AssetsPage() {
     setAssignAsset(asset);
     setAssignOpen(true);
   };
-    
+
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetchAssets();
-        setAssets(data);
+        const [
+          assetsData,
+          categoriesData,
+          departmentsData,
+          locationsData,
+        ] = await Promise.all([
+          fetchAssets(),
+          getCategories(token!),
+          getDepartments(token!),
+          getLocations(token!),
+        ]);
+
+        setAssets(assetsData);
+        setCategories(categoriesData);
+        setDepartments(departmentsData);
+        setLocations(locationsData);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -38,8 +82,77 @@ export default function AssetsPage() {
     }
 
     load();
-  }, []);
+  }, [token]);
 
+
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      try {
+        const results = await searchAssets({
+          q: search,
+          category_id: categoryId,
+          department_id: departmentId,
+          location_id: locationId,
+          condition_status: conditionStatus,
+          asset_status: assetStatus,
+        });
+
+        setAssets(results);
+      } catch (err) {
+        console.error(err);
+      }
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [
+    search,
+    categoryId,
+    departmentId,
+    locationId,
+    conditionStatus,
+    assetStatus,
+  ]);
+
+
+
+
+  async function handleCreateAsset(
+    data: CreateAssetPayload
+  ) {
+    try {
+      setCreating(true);
+
+      const asset = await createAsset(
+        data,
+        token!
+      );
+
+      setAssets((current) => [
+        asset,
+        ...current,
+      ]);
+
+      setCreateOpen(false);
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Failed to create asset"
+      );
+    } finally {
+      setCreating(false);
+    }
+  }
+  const loadAssets = async () => {
+    try {
+      const data = await fetchAssets();
+      setAssets(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   if (loading) {
     return <AppLoader />;
   }
@@ -50,84 +163,47 @@ export default function AssetsPage() {
 
   return (
     <div className="p-6 bg-white min-h-screen">
-      <h1 className="text-2xl font-bold text-blue-700 mb-4">
-        Asset Inventory
-      </h1>
+      <AssetsHeader
+        isAdmin={isAdmin}
+        onCreate={() => setCreateOpen(true)}
+        search={search}
+        onSearchChange={setSearch}
+        categories={categories}
+        departments={departments}
+        locations={locations}
+        categoryId={categoryId}
+        departmentId={departmentId}
+        locationId={locationId}
+        conditionStatus={conditionStatus}
+        assetStatus={assetStatus}
+        onCategoryChange={setCategoryId}
+        onDepartmentChange={setDepartmentId}
+        onLocationChange={setLocationId}
+        onConditionChange={setConditionStatus}
+        onAssetStatusChange={setAssetStatus}
+      />
 
-      <div className="overflow-x-auto border border-blue-200 rounded-lg">
-        <table className="min-w-full text-sm">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="p-3 text-left">Tag</th>
-              <th className="p-3 text-left">Item</th>
-              <th className="p-3 text-left">Serial</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Condition</th>
-              <th className="p-3 text-left">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {assets.map((asset, idx) => (
-              <tr
-                key={asset.id}
-                className={idx % 2 === 0 ? "bg-white" : "bg-yellow-50"}
-              >
-                <td className="p-3 font-mono text-blue-700">
-                  {asset.asset_tag}
-                </td>
-                <td className="p-3">{asset.item_name}</td>
-                <td className="p-3">{asset.serial_number}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded text-xs font-semibold
-                      ${
-                        asset.asset_status === "available"
-                          ? "bg-blue-100 text-blue-700"
-                          : asset.asset_status === "maintenance"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : "bg-gray-200 text-gray-700"
-                      }`}
-                  >
-                    {asset.asset_status}
-                  </span>
-                </td>
-
-                <td className="p-3">{asset.condition_status}</td>
-
-                <td className="p-3">
-                    <div className="flex gap-2">
-                        <button
-                          onClick={() => handleView(asset)}
-                          className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700"
-                            >
-                          View
-                        </button>
-
-                        {isAdmin && (
-                            <button
-                                onClick={() => handleAssign(asset)}
-                                className="px-3 py-1 text-xs bg-yellow-400 text-black rounded hover:bg-yellow-500"
-                            >
-                                Assign
-                            </button>
-                        )}
-                        <AssignAssetModal
-                            isOpen={assignOpen}
-                            onClose={() => setAssignOpen(false)}
-                            asset={assignAsset}
-                            />
-
-                        <button className="px-3 py-1 text-xs border border-blue-600 text-blue-600 rounded hover:bg-blue-50">
-                        Edit
-                        </button>
-                    </div>
-                    </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <AssetsTable
+        assets={assets}
+        isAdmin={isAdmin}
+        onView={handleView}
+        onAssign={handleAssign}
+      />
+      <AssignAssetModal
+        isOpen={assignOpen}
+        onClose={() => setAssignOpen(false)}
+        asset={assignAsset}
+        onAssigned={loadAssets}
+      />
+      <CreateAssetModal
+        open={createOpen}
+        loading={creating}
+        categories={categories}
+        departments={departments}
+        locations={locations}
+        onClose={() => setCreateOpen(false)}
+        onSubmit={handleCreateAsset}
+      />
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

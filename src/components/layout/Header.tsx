@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/useAuth";
-
+import { Link } from "react-router-dom";
 export default function Header() {
   const { user, token, logout, refreshUser } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const navItems = [
+    { label: "Dashboard", href: "/" },
+    { label: "Assignments", href: "/assignments" },
+    { label: "Requests", href: "/requests" },
+    { label: "Assets", href: "/assets" },
+  ];
   useEffect(() => {
     if (token && !user) {
       refreshUser();
@@ -17,40 +22,39 @@ export default function Header() {
         
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img
+          <Link to="/"><img
             src="/images/logo.png"
             alt="logo"
             className="h-19 w-auto"
             />
+          </Link>
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {["Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6"].map(
-            (item) => (
-              <a
-                key={item}
-                href="#"
-                className="
-                    relative
-                    text-blue-700
-                    hover:text-yellow-500
-                    transition
-                    after:content-['']
-                    after:absolute
-                    after:left-0
-                    after:-bottom-1
-                    after:h-0.5
-                    after:w-0
-                    after:bg-yellow-400
-                    hover:after:w-full
-                    after:transition-all
-                    "
-              >
-                {item}
-              </a>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              className="
+                relative
+                text-blue-700
+                hover:text-yellow-500
+                transition
+                after:content-['']
+                after:absolute
+                after:left-0
+                after:-bottom-1
+                after:h-0.5
+                after:w-0
+                after:bg-yellow-400
+                hover:after:w-full
+                after:transition-all
+              "
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         {/* User */}
@@ -79,17 +83,16 @@ export default function Header() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-[#1f2f73] px-4 py-3 space-y-2">
-          {["Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6"].map(
-            (item) => (
-              <a
-                key={item}
-                href="#"
-                className="block text-blue-200 hover:text-yellow-300"
-              >
-                {item}
-              </a>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              className="block text-blue-200 hover:text-yellow-300"
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       )}
     </header>
