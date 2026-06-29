@@ -25,3 +25,16 @@ export interface AssetSearchFilters {
   condition_status?: string;
   asset_status?: string;
 }
+
+export interface UpdateAssetPayload {
+  item_name: string;
+  serial_number: string;
+  description: string;
+  category_id: number;
+  department_id: number;
+  location_id: number;
+  purchase_date: string;
+  purchase_cost: number;
+  supplier: string;
+  condition_status: string;
+}

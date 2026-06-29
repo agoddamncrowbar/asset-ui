@@ -6,7 +6,7 @@ import type {
   Pagination,
 } from "./audit";
 
-const API_URL = "http://localhost/asset_backend/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface AuditSummaryResponse {
   success: boolean;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { searchAssets, fetchAssets } from "../api/assetService";
-import type { Asset } from "../api/assets";
+import { searchAssets, fetchAssets, updateAsset, createAsset, type CreateAssetPayload, } from "../api/assetService";
+import type { Asset, UpdateAssetPayload } from "../api/assets";
 import AppLoader from "../components/loading/AppLoader";
 
 import { useAuth } from "../auth/useAuth";
@@ -8,10 +8,10 @@ import { useAuth } from "../auth/useAuth";
 import Modal from "../components/ui/Modal";
 import AssignAssetModal from "../components/assets/AssignAssetModal";
 import CreateAssetModal from "../components/assets/CreateAssetModal";
+import EditAssetModal from "../components/assets/EditAssetModal";
 import AssetsHeader from "../components/assets/AssetsHeader";
 import AssetsTable from "../components/assets/AssetsTable";
 
-import { createAsset, type CreateAssetPayload,} from "../api/assetService";
 import { getCategories,} from "../api/categoryService";
 import { getDepartments,} from "../api/departmentService";
 import { getLocations,} from "../api/locationService";
@@ -33,6 +33,12 @@ export default function AssetsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuth();
 
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editAsset, setEditAsset] = useState<Asset | null>(null);
+  
+  
   const [createOpen, setCreateOpen] = useState(false);
   const [creating, setCreating] = useState(false);
 
@@ -54,7 +60,44 @@ export default function AssetsPage() {
     setAssignAsset(asset);
     setAssignOpen(true);
   };
+  const handleEdit = (asset: Asset) => {
+    setEditAsset(asset);
+    setEditOpen(true);
+  };
+  async function handleEditAsset(
+      data: UpdateAssetPayload
+    ) {
+      if (!editAsset || !token) return;
 
+      try {
+        setEditing(true);
+
+        const updated = await updateAsset(
+          editAsset.id,
+          data,
+          token
+        );
+
+        setAssets((current) =>
+          current.map((asset) =>
+            asset.id === updated.id ? updated : asset
+          )
+        );
+
+        setEditOpen(false);
+        setEditAsset(null);
+      } catch (error) {
+        console.error(error);
+
+        alert(
+          error instanceof Error
+            ? error.message
+            : "Failed to update asset"
+        );
+      } finally {
+        setEditing(false);
+      }
+    }
   useEffect(() => {
     async function load() {
       try {
@@ -188,12 +231,26 @@ export default function AssetsPage() {
         isAdmin={isAdmin}
         onView={handleView}
         onAssign={handleAssign}
+        onEdit={handleEdit}
       />
       <AssignAssetModal
         isOpen={assignOpen}
         onClose={() => setAssignOpen(false)}
         asset={assignAsset}
         onAssigned={loadAssets}
+      />
+      <EditAssetModal
+        open={editOpen}
+        loading={editing}
+        asset={editAsset}
+        categories={categories}
+        departments={departments}
+        locations={locations}
+        onClose={() => {
+          setEditOpen(false);
+          setEditAsset(null);
+        }}
+        onSubmit={handleEditAsset}
       />
       <CreateAssetModal
         open={createOpen}

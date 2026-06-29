@@ -26,7 +26,7 @@ export default function AppLoader() {
       <h2 className="mt-8 text-2xl font-bold tracking-tight text-[#283B91]">
         Asset Management System
       </h2>
-      <p className="mt-1 text-sm text-gray-400">Loading your workspace…</p>
+      <p className="mt-1 text-sm text-gray-400">Loading…</p>
 
       <div className="mt-8 h-1.5 w-64 overflow-hidden rounded-full bg-gray-100">
         <div

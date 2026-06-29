@@ -1,5 +1,5 @@
 import type { Asset } from "./assets";
-import type { AssetSearchFilters } from "./assets";
+import type { AssetSearchFilters, UpdateAssetPayload } from "./assets";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -120,6 +120,34 @@ export async function searchAssets(
   }
 
   const json = await res.json();
+
+  return json.data;
+}
+
+export async function updateAsset(
+  assetId: number,
+  data: UpdateAssetPayload,
+  token: string
+): Promise<Asset> {
+  const res = await fetch(
+    `${API_URL}/assets/${assetId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      json.message || "Failed to update asset"
+    );
+  }
 
   return json.data;
 }

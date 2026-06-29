@@ -5,6 +5,7 @@ interface Props {
   isAdmin: boolean;
   onView: (asset: Asset) => void;
   onAssign: (asset: Asset) => void;
+  onEdit: (asset: Asset) => void;
 }
 
 export default function AssetsTable({
@@ -12,6 +13,7 @@ export default function AssetsTable({
   isAdmin,
   onView,
   onAssign,
+  onEdit
 }: Props) {
   return (
     <div className="overflow-x-auto border border-blue-200 rounded-lg">
@@ -96,6 +98,7 @@ export default function AssetsTable({
                   )}
 
                   <button
+                    onClick={() => onEdit(asset)}
                     className="
                       px-3 py-1 text-xs
                       border border-blue-600
