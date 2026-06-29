@@ -23,6 +23,7 @@ interface AuditLogResponse {
 interface SingleAuditResponse {
   success: boolean;
   data: AuditLog;
+  message?: string;
 }
 
 export async function getAuditSummaries(

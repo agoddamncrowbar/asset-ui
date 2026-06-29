@@ -7,7 +7,7 @@ import type { AssetRequest } from "../api/requests";
 import { searchAssets } from "../api/assetService";
 import {
   createRequest,
-  getAssetRequestQueue,
+  getAssetRequestQueue, approveRequest
 } from "../api/requestService";
 
 import {
@@ -42,6 +42,47 @@ export default function Requests() {
   const [queue, setQueue] = useState<
     AssetRequest[]
   >([]);
+  
+  const [approvingId, setApprovingId] = useState<number | null>(null);
+  const isAdmin = user?.role?.toLowerCase() === "admin";
+
+  async function handleApprove(
+    request: AssetRequest
+    ) {
+    if (!token || !user || !selectedAsset) return;
+
+    try {
+        setApprovingId(request.id);
+
+        const updated = await approveRequest(
+          request.id,
+          {
+            processed_by: user.id,
+          },
+          token
+        );
+
+        setQueue((current) =>
+        current.map((r) =>
+            r.id === updated.id ? updated : r
+        )
+        );
+
+        // Reload the queue because approval may affect
+        // queue positions or the next request.
+        const refreshed =
+        await getAssetRequestQueue(
+            selectedAsset.id,
+            token
+        );
+
+        setQueue(refreshed);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        setApprovingId(null);
+    }
+    }
 
   async function loadAssets() {
     setLoading(true);
@@ -176,7 +217,10 @@ export default function Requests() {
         asset={selectedAsset}
         requests={queue}
         loading={queueLoading}
-    />
+        isAdmin={isAdmin}
+        approvingId={approvingId}
+        onApprove={handleApprove}
+        />
     </div>
   );
 }

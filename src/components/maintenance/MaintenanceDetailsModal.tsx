@@ -47,12 +47,12 @@ export default function MaintenanceDetailsModal({
   }, [job]);
 
   if (!job) return null;
-
+  const currentJob = job;
     async function handleStart() {
     try {
         setSaving(true);
 
-        await startMaintenanceJob(job.id, token);
+        await startMaintenanceJob(currentJob.id, token);
 
         onUpdated();
         onClose();
@@ -78,7 +78,7 @@ export default function MaintenanceDetailsModal({
         setSaving(true);
 
         await updateMaintenanceJob(
-        job.id,
+        currentJob.id,
         {
             status,
             priority,
@@ -106,7 +106,7 @@ export default function MaintenanceDetailsModal({
         setSaving(true);
 
         await completeMaintenanceJob(
-        job.id,
+        currentJob.id,
         {
             resolution_notes: resolutionNotes,
         },

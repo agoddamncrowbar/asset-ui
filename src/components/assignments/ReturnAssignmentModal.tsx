@@ -28,13 +28,13 @@ export default function ReturnAssignmentModal({
     useState(false);
 
   if (!isOpen || !assignment) return null;
-
+  const currentAssignment = assignment;
   async function handleSubmit() {
     try {
       setLoading(true);
 
       await onSubmit(
-        assignment.id,
+        currentAssignment.id,
         returnNotes,
         conditionStatus
       );

@@ -274,11 +274,11 @@ export default function AssetsPage() {
                 Close
             </button>
 
-            {user?.role?.toLowerCase() === "admin" && (
+            {/* {user?.role?.toLowerCase() === "admin" && (
                 <button className="px-4 py-2 text-sm bg-yellow-400 text-black rounded hover:bg-yellow-500">
                 Assign Asset
                 </button>
-            )}
+            )} */}
             </>
         }
         >

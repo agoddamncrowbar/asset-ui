@@ -1,4 +1,4 @@
-import type { User } from "../../auth/auth";
+import type { User } from "../../api/users";
 
 interface Props {
   userId: number;

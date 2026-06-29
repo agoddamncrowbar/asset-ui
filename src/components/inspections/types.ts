@@ -2,7 +2,7 @@ import type {
   AssetCondition,
   InspectionResult,
 } from "../../api/inspection";
-import type { User } from "../../auth/auth";
+import type { User } from "../../api/users";
 export interface AssetInspectionForm {
   result: InspectionResult;
   condition_after: AssetCondition;

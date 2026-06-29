@@ -9,6 +9,13 @@ interface Props {
   asset: Asset | null;
   requests: AssetRequest[];
   loading: boolean;
+
+  isAdmin: boolean;
+  approvingId: number | null;
+
+  onApprove: (
+    request: AssetRequest
+  ) => void;
 }
 
 export default function RequestQueueModal({
@@ -17,6 +24,9 @@ export default function RequestQueueModal({
   asset,
   requests,
   loading,
+  isAdmin,
+  approvingId,
+  onApprove,
 }: Props) {
   return (
     <Modal
@@ -78,6 +88,11 @@ export default function RequestQueueModal({
                     <th className="px-4 py-3 text-left">Reason</th>
                     <th className="px-4 py-3 text-left">Status</th>
                     <th className="px-4 py-3 text-left">Requested</th>
+                    {isAdmin && (
+                        <th className="px-4 py-3 text-center">
+                            Actions
+                        </th>
+                    )}
                   </tr>
                 </thead>
 
@@ -108,6 +123,25 @@ export default function RequestQueueModal({
                           request.requested_at
                         ).toLocaleString()}
                       </td>
+                      {isAdmin && (
+                        <td className="px-4 py-3 text-center">
+                            {request.status === "queued" ? (
+                            <button
+                                disabled={approvingId === request.id}
+                                onClick={() => onApprove(request)}
+                                className="rounded bg-green-600 px-3 py-1 text-white hover:bg-green-700 disabled:opacity-50"
+                            >
+                                {approvingId === request.id
+                                ? "Approving..."
+                                : "Approve"}
+                            </button>
+                            ) : (
+                            <span className="text-gray-400">
+                                —
+                            </span>
+                            )}
+                        </td>
+                        )}
                     </tr>
                   ))}
                 </tbody>

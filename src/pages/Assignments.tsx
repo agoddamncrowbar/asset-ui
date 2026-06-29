@@ -5,7 +5,8 @@ import { fetchAssignments, returnAssignment } from "../api/assignmentService";
 import type { Assignment, Pagination as PaginationType, } from "../api/assignments";
 import ReturnAssignmentModal from "../components/assignments/ReturnAssignmentModal";
 import { useAuth } from "../auth/useAuth";
-import type { User } from "../auth/auth";
+import type { User } from "../api/users";
+
 import UserAssignmentSearch from "../components/assignments/UserAssignmentSearch";
 import { fetchUserAssignments } from "../api/assignmentService";
 import AppLoader from "../components/loading/AppLoader";
@@ -21,7 +22,7 @@ export default function AssignmentsPage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  // const [selectedUser, setSelectedUser] = useState<User | null>(null);
   useEffect(() => {
     if (!token) return;
 
@@ -67,7 +68,7 @@ export default function AssignmentsPage() {
     try {
         setLoading(true);
 
-        setSelectedUser(user);
+        // setSelectedUser(user);
 
         const assignments =
         await fetchUserAssignments(
@@ -106,10 +107,12 @@ export default function AssignmentsPage() {
         <h1 className="text-2xl font-bold text-blue-700">
           Asset Assignments
         </h1>
-        <UserAssignmentSearch
+        {token && (
+          <UserAssignmentSearch
             token={token}
             onUserSelect={handleUserSelect}
-        />
+          />
+          )}
         <button
           onClick={() =>
             loadAssignments(page)
