@@ -15,8 +15,8 @@ export default function UserDetails({
   onReturnAsset,
 }: Props) {
   return (
-    <div className="rounded-lg border bg-white p-5">
-      <h2 className="mb-4 font-medium">
+    <div className="border border-slate-200 bg-white p-5">
+      <h2 className="mb-4 text-sm font-semibold tracking-tight text-slate-900">
         User Details
       </h2>
 
@@ -26,47 +26,54 @@ export default function UserDetails({
         </p>
       ) : (
         <>
-          <div className="space-y-3 text-sm">
-            <div>
-              <span className="font-medium">
-                University ID:
-              </span>{" "}
-              {user.university_id}
+          <div className="divide-y divide-slate-100 text-sm">
+            <div className="flex justify-between py-2.5 first:pt-0">
+              <span className="text-slate-500">University ID</span>
+              <span className="font-medium text-slate-900">
+                {user.university_id}
+              </span>
             </div>
 
-            <div>
-              <span className="font-medium">
-                Name:
-              </span>{" "}
-              {user.first_name} {user.last_name}
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Name</span>
+              <span className="font-medium text-slate-900">
+                {user.first_name} {user.last_name}
+              </span>
             </div>
 
-            <div>
-              <span className="font-medium">
-                Email:
-              </span>{" "}
-              {user.email}
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Email</span>
+              <span className="font-medium text-slate-900">
+                {user.email}
+              </span>
             </div>
 
-            <div>
-              <span className="font-medium">
-                Phone:
-              </span>{" "}
-              {user.phone ?? "N/A"}
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Phone</span>
+              <span className="font-medium text-slate-900">
+                {user.phone ?? "N/A"}
+              </span>
             </div>
 
-            <div>
-              <span className="font-medium">
-                Role:
-              </span>{" "}
-              {user.role}
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Role</span>
+              <span className="font-medium capitalize text-slate-900">
+                {user.role}
+              </span>
             </div>
 
-            <div>
-              <span className="font-medium">
-                Status:
-              </span>{" "}
-              {user.status}
+            <div className="flex justify-between py-2.5 last:pb-0">
+              <span className="text-slate-500">Status</span>
+              <span className="inline-flex items-center gap-1.5 font-medium capitalize text-slate-900">
+                <span
+                  className={`h-1.5 w-1.5 ${
+                    user.status === "active"
+                      ? "bg-yellow-400"
+                      : "bg-slate-300"
+                  }`}
+                />
+                {user.status}
+              </span>
             </div>
           </div>
 

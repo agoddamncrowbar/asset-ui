@@ -124,13 +124,13 @@ export default function CreateInspectionModal({
         className="space-y-4"
       >
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Scheduled Date
           </label>
 
           <input
             type="datetime-local"
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             value={scheduledDate}
             onChange={(e) =>
               setScheduledDate(e.target.value)
@@ -140,12 +140,12 @@ export default function CreateInspectionModal({
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Notes
           </label>
 
           <textarea
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -153,12 +153,12 @@ export default function CreateInspectionModal({
         </div>
 
         <div className="relative">
-          <label className="block mb-1 font-medium">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Search Assets
           </label>
 
           <input
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             placeholder="Search asset..."
             value={query}
             onChange={(e) =>
@@ -167,19 +167,20 @@ export default function CreateInspectionModal({
           />
 
           {loadingSearch && (
-            <p className="text-sm mt-2">Searching...</p>
+            <p className="text-sm mt-2 text-slate-500">Searching...</p>
           )}
 
           {results.length > 0 && (
-            <div className="absolute z-20 mt-1 w-full rounded border bg-white shadow max-h-56 overflow-y-auto">
+            <div className="absolute z-20 mt-1 w-full border border-slate-200 bg-white max-h-56 overflow-y-auto">
               {results.map((asset) => (
                 <button
                   type="button"
                   key={asset.id}
                   onClick={() => addAsset(asset)}
-                  className="block w-full text-left px-3 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors"
                 >
-                  {asset.asset_tag} — {asset.item_name}
+                  <span className="font-medium text-slate-900">{asset.asset_tag}</span>
+                  <span className="text-slate-500"> — {asset.item_name}</span>
                 </button>
               ))}
             </div>
@@ -187,12 +188,12 @@ export default function CreateInspectionModal({
         </div>
 
         <div>
-          <label className="block mb-2 font-medium">
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Selected Assets
           </label>
 
           {selectedAssets.length === 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-slate-500">
               No assets selected.
             </p>
           )}
@@ -201,13 +202,13 @@ export default function CreateInspectionModal({
             {selectedAssets.map((asset) => (
               <div
                 key={asset.id}
-                className="flex justify-between items-center border rounded px-3 py-2"
+                className="flex justify-between items-center border border-slate-200 px-3 py-2"
               >
                 <div>
-                  <div className="font-medium">
+                  <div className="text-sm font-medium text-slate-900">
                     {asset.asset_tag}
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-slate-500">
                     {asset.item_name}
                   </div>
                 </div>
@@ -217,7 +218,7 @@ export default function CreateInspectionModal({
                   onClick={() =>
                     removeAsset(asset.id)
                   }
-                  className="text-red-600 hover:text-red-800"
+                  className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
                 >
                   Remove
                 </button>
@@ -230,7 +231,7 @@ export default function CreateInspectionModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 border rounded"
+            className="px-4 py-2 text-sm font-medium border border-slate-300 text-slate-700 hover:border-blue-600 hover:bg-blue-50 transition-colors"
           >
             Cancel
           </button>
@@ -238,7 +239,7 @@ export default function CreateInspectionModal({
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 rounded bg-blue-600 text-white disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {saving ? "Creating..." : "Create Inspection"}
           </button>

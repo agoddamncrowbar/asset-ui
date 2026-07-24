@@ -53,13 +53,13 @@ export default function MaintenanceAssignment({
   }
 
   return (
-    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/70 p-5">
+    <div className="mt-6 border border-yellow-300 bg-yellow-50 p-5">
     <div className="mb-5 flex items-center justify-between">
         <div>
-        <h4 className="text-lg font-semibold text-amber-900">
+        <h4 className="text-sm font-semibold tracking-tight text-slate-900">
             Maintenance Assignment
         </h4>
-        <p className="text-sm text-amber-700">
+        <p className="mt-0.5 text-sm text-slate-600">
             This asset requires maintenance. Assign a technician and set the
             priority.
         </p>
@@ -68,7 +68,7 @@ export default function MaintenanceAssignment({
 
     {/* Technician Search */}
     <div className="mb-5">
-        <label className="mb-2 block text-sm font-semibold text-slate-700">
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
         Assign Technician
         </label>
 
@@ -81,12 +81,10 @@ export default function MaintenanceAssignment({
             }
             placeholder="Search by university ID or name..."
             className="
-            flex-1 rounded-lg border border-slate-300
-            bg-white px-4 py-2.5
-            outline-none
-            transition
-            focus:border-blue-500
-            focus:ring-2 focus:ring-blue-100
+            flex-1 border border-slate-300
+            bg-white px-4 py-2
+            text-sm outline-none
+            focus:border-blue-600
             "
         />
 
@@ -95,13 +93,13 @@ export default function MaintenanceAssignment({
             onClick={handleSearch}
             disabled={loading}
             className="
-            rounded-lg bg-blue-600
-            px-5 py-2.5
-            font-medium text-white
-            transition
-            hover:bg-blue-700
+            px-5 py-2
+            text-sm font-medium text-white
+            bg-blue-700
+            hover:bg-blue-800
             disabled:cursor-not-allowed
             disabled:opacity-50
+            transition-colors
             "
         >
             {loading ? "Searching..." : "Search"}
@@ -112,8 +110,8 @@ export default function MaintenanceAssignment({
         <div
             className="
             mt-3 max-h-56 overflow-y-auto
-            rounded-lg border border-slate-200
-            bg-white shadow-sm
+            border border-slate-200
+            bg-white
             "
         >
             {form.searchResults.map((user) => (
@@ -124,14 +122,14 @@ export default function MaintenanceAssignment({
                 className="
                 flex w-full items-center justify-between
                 border-b border-slate-100
-                px-4 py-3 text-left
-                transition
-                hover:bg-slate-50
+                px-4 py-3 text-left text-sm
+                transition-colors
+                hover:bg-blue-50
                 last:border-b-0
                 "
             >
                 <div>
-                <div className="font-medium text-slate-800">
+                <div className="font-medium text-slate-900">
                     {user.first_name} {user.last_name}
                 </div>
 
@@ -140,7 +138,7 @@ export default function MaintenanceAssignment({
                 </div>
                 </div>
 
-                <span className="text-sm font-medium text-blue-600">
+                <span className="text-xs font-medium text-blue-700">
                 Select
                 </span>
             </button>
@@ -151,7 +149,7 @@ export default function MaintenanceAssignment({
 
     {/* Priority */}
     <div>
-        <label className="mb-2 block text-sm font-semibold text-slate-700">
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
         Maintenance Priority
         </label>
 
@@ -164,12 +162,10 @@ export default function MaintenanceAssignment({
             )
         }
         className="
-            w-full rounded-lg border border-slate-300
-            bg-white px-4 py-2.5
-            outline-none
-            transition
-            focus:border-blue-500
-            focus:ring-2 focus:ring-blue-100
+            w-full border border-slate-300
+            bg-white px-4 py-2
+            text-sm outline-none
+            focus:border-blue-600
         "
         >
         <option value="low">Low Priority</option>

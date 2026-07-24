@@ -64,14 +64,14 @@ export default function PostInspectionResultsModal({
     }
   }
 
-  return (
+return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       title="Record Asset Results"
     >
       {loading ? (
-        <div className="py-8 text-center">
+        <div className="py-8 text-center text-sm text-slate-500">
           Loading assets...
         </div>
       ) : (
@@ -92,7 +92,7 @@ export default function PostInspectionResultsModal({
             <button
               onClick={onClose}
               disabled={saving}
-              className="px-4 py-2 border rounded"
+              className="px-4 py-2 text-sm font-medium border border-slate-300 text-slate-700 hover:border-blue-600 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Cancel
             </button>
@@ -100,7 +100,7 @@ export default function PostInspectionResultsModal({
             <button
               onClick={handleSave}
               disabled={saving || assets.length === 0}
-              className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {saving
                 ? "Saving..."

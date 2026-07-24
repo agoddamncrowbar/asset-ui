@@ -26,58 +26,78 @@ export default function UserDetailsModal({
         fixed inset-0 z-50
         flex items-center justify-center
         lg:hidden
-        bg-black/40 p-4
+        bg-slate-900/40 p-4
       "
     >
       <div
         className="
           w-full max-w-lg
-          rounded-xl bg-white
-          shadow-xl
+          bg-white border border-slate-200
         "
       >
-        <div className="flex items-center justify-between border-b p-4">
-          <h2 className="font-semibold">
+        <div className="flex items-center justify-between border-b border-slate-200 p-4">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">
             User Details
           </h2>
 
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-900"
+            className="text-slate-400 hover:text-slate-900 transition-colors"
           >
             ✕
           </button>
         </div>
 
-        <div className="space-y-3 p-4 text-sm">
-          <div>
-            <strong>University ID:</strong>{" "}
-            {user.university_id}
-          </div>
+        <div className="p-4">
+          <div className="divide-y divide-slate-100 text-sm">
+            <div className="flex justify-between py-2.5 first:pt-0">
+              <span className="text-slate-500">University ID</span>
+              <span className="font-medium text-slate-900">
+                {user.university_id}
+              </span>
+            </div>
 
-          <div>
-            <strong>Name:</strong>{" "}
-            {user.first_name} {user.last_name}
-          </div>
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Name</span>
+              <span className="font-medium text-slate-900">
+                {user.first_name} {user.last_name}
+              </span>
+            </div>
 
-          <div>
-            <strong>Email:</strong>{" "}
-            {user.email}
-          </div>
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Email</span>
+              <span className="font-medium text-slate-900">
+                {user.email}
+              </span>
+            </div>
 
-          <div>
-            <strong>Phone:</strong>{" "}
-            {user.phone ?? "N/A"}
-          </div>
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Phone</span>
+              <span className="font-medium text-slate-900">
+                {user.phone ?? "N/A"}
+              </span>
+            </div>
 
-          <div>
-            <strong>Role:</strong>{" "}
-            {user.role}
-          </div>
+            <div className="flex justify-between py-2.5">
+              <span className="text-slate-500">Role</span>
+              <span className="font-medium capitalize text-slate-900">
+                {user.role}
+              </span>
+            </div>
 
-          <div>
-            <strong>Status:</strong>{" "}
-            {user.status}
+            <div className="flex justify-between py-2.5 last:pb-0">
+              <span className="text-slate-500">Status</span>
+              <span className="inline-flex items-center gap-1.5 font-medium capitalize text-slate-900">
+                <span
+                  className={`h-1.5 w-1.5 ${
+                    user.status === "active"
+                      ? "bg-yellow-400"
+                      : "bg-slate-300"
+                  }`}
+                />
+                {user.status}
+              </span>
+            </div>
           </div>
 
           <UserActions

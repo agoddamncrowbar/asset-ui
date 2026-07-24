@@ -14,25 +14,28 @@ export default function UserSearch({
   onReset,
 }: Props) {
   return (
-    <div className="mb-6 rounded-lg border bg-white p-4">
+    <div className="mb-6 border border-slate-200 bg-white p-4">
       <div className="flex gap-3">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && onSearch()}
           placeholder="Search by university ID or name..."
           className="
-            flex-1 rounded-lg border border-slate-300
-            px-4 py-2 outline-none
-            focus:border-blue-500
+            flex-1 border border-slate-300
+            px-4 py-2 text-sm outline-none
+            placeholder:text-slate-400
+            focus:border-blue-600
           "
         />
 
         <button
           onClick={onSearch}
           className="
-            rounded-lg bg-blue-600 px-5 py-2
-            text-white hover:bg-blue-700
+            px-5 py-2 text-sm font-medium text-white
+            bg-blue-700 hover:bg-blue-800
+            transition-colors
           "
         >
           Search
@@ -41,8 +44,10 @@ export default function UserSearch({
         <button
           onClick={onReset}
           className="
-            rounded-lg border px-5 py-2
-            hover:bg-slate-50
+            px-5 py-2 text-sm font-medium
+            border border-slate-300 text-slate-700
+            hover:border-blue-600 hover:bg-blue-50
+            transition-colors
           "
         >
           Reset

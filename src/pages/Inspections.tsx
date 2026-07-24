@@ -126,7 +126,7 @@ export default function Inspections() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-xl font-semibold tracking-tight text-slate-900">
           Inspections
         </h1>
 
@@ -134,7 +134,7 @@ export default function Inspections() {
           onClick={() =>
             setShowCreateModal(true)
           }
-          className="px-4 py-2 rounded bg-blue-600 text-white"
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 transition-colors"
         >
           Create Inspection
         </button>

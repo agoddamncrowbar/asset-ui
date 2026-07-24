@@ -17,39 +17,43 @@ export default function Header() {
   }, [token]);
 
   return (
-    <header className="w-full bg-white text-gray-900 shadow-sm border-b">
+    <header className="w-full bg-white text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 py-1 flex items-center justify-between">
-        
+
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <Link to="/"><img
-            src="/images/logo.png"
-            alt="logo"
-            className="h-19 w-auto"
+          <Link to="/">
+            <img
+              src="/images/logo.png"
+              alt="logo"
+              className="h-16 w-auto"
             />
           </Link>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
           {navItems.map((item) => (
             <Link
               key={item.label}
               to={item.href}
               className="
-                relative
-                text-blue-700
-                hover:text-yellow-500
-                transition
+                relative px-3 py-2
+                text-slate-600
+                hover:text-blue-700
+                hover:bg-blue-50
+                transition-colors
                 after:content-['']
                 after:absolute
-                after:left-0
-                after:-bottom-1
+                after:left-3
+                after:right-3
+                after:-bottom-px
                 after:h-0.5
-                after:w-0
                 after:bg-yellow-400
-                hover:after:w-full
-                after:transition-all
+                after:scale-x-0
+                hover:after:scale-x-100
+                after:transition-transform
+                after:origin-left
               "
             >
               {item.label}
@@ -58,21 +62,21 @@ export default function Header() {
         </nav>
 
         {/* User */}
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-700">
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-slate-500 border-r border-slate-200 pr-3">
             {user ? user.first_name : "Loading..."}
           </span>
 
           <button
             onClick={logout}
-            className="text-sm text-yellow-300 hover:text-yellow-400"
+            className="text-sm font-medium text-slate-600 hover:text-blue-700 px-3 py-1.5 border border-slate-300 hover:border-blue-600 hover:bg-blue-50 transition-colors"
           >
             Logout
           </button>
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-blue-700 text-2xl"
+            className="md:hidden text-blue-700 text-2xl leading-none px-1"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             ☰
@@ -82,12 +86,12 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#1f2f73] px-4 py-3 space-y-2">
+        <div className="md:hidden bg-white border-t border-slate-200">
           {navItems.map((item) => (
             <Link
               key={item.label}
               to={item.href}
-              className="block text-blue-200 hover:text-yellow-300"
+              className="block px-4 py-3 text-sm font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50 border-b border-slate-100 last:border-b-0 transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               {item.label}

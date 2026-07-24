@@ -30,33 +30,33 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white w-full max-w-2xl rounded-lg shadow-lg border border-blue-200"
+        className="bg-white w-full max-w-2xl border border-slate-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-blue-100">
-          <h2 className="text-lg font-bold text-blue-700">
+        <div className="flex justify-between items-center p-5 border-b border-slate-200">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">
             {title}
           </h2>
 
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-black"
+            className="text-slate-400 hover:text-slate-900 transition-colors"
           >
             ✕
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-4">{children}</div>
+        <div className="p-5">{children}</div>
 
         {/* Footer */}
         {footer && (
-          <div className="flex justify-end gap-2 p-4 border-t border-blue-100">
+          <div className="flex justify-end gap-3 p-5 border-t border-slate-200">
             {footer}
           </div>
         )}

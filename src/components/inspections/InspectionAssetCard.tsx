@@ -19,20 +19,20 @@ export default function InspectionAssetCard({
   updateForm,
 }: Props) {
   return (
-    <div className="border rounded-lg p-4">
+    <div className="border border-slate-200 p-4">
       <div className="mb-4">
-        <h3 className="font-semibold text-lg">
+        <h3 className="text-sm font-semibold tracking-tight text-slate-900">
           {asset.item_name}
         </h3>
 
-        <p className="text-sm text-gray-600">
+        <p className="mt-0.5 text-sm text-slate-500">
           Asset Tag: {asset.asset_tag}
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Inspection Result
           </label>
 
@@ -45,7 +45,7 @@ export default function InspectionAssetCard({
                 e.target.value as AssetInspectionForm["result"]
               )
             }
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
           >
             <option value="ok">OK</option>
             <option value="damaged">Damaged</option>
@@ -53,7 +53,7 @@ export default function InspectionAssetCard({
             <option value="retire">Retire</option></select>
         </div>
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Condition After
           </label>
 
@@ -66,7 +66,7 @@ export default function InspectionAssetCard({
                 e.target.value as AssetInspectionForm["condition_after"]
               )
             }
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
           >
             <option value="excellent">Excellent</option>
             <option value="good">Good</option>
@@ -78,16 +78,18 @@ export default function InspectionAssetCard({
       </div>
       {(form.result === "damaged" ||
           form.result === "needs_repair") && (
-          <MaintenanceAssignment
-            form={form}
-            token={token}
-            updateForm={(field, value) =>
-              updateForm(asset.id, field, value)
-            }
-          />
+          <div className="mt-4 border-t border-slate-100 pt-4">
+            <MaintenanceAssignment
+              form={form}
+              token={token}
+              updateForm={(field, value) =>
+                updateForm(asset.id, field, value)
+              }
+            />
+          </div>
         )}
       <div className="mt-4">
-        <label className="block mb-1 font-medium">
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
           Remarks
         </label>
 
@@ -101,7 +103,7 @@ export default function InspectionAssetCard({
               e.target.value
             )
           }
-          className="w-full border rounded px-3 py-2"
+          className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
           placeholder="Enter inspection remarks..."
         />
       </div>

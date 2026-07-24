@@ -130,12 +130,12 @@ export default function UsersPage() {
         console.log(id);
     }
 
-  return (
-    <div className="min-h-screen bg-slate-50">
+return (
+    <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl p-6">
         <div className="mb-8 flex items-center justify-between">
         <div>
-            <h1 className="text-2xl font-semibold">
+            <h1 className="text-xl font-semibold tracking-tight text-slate-900">
             User Management
             </h1>
 
@@ -147,9 +147,9 @@ export default function UsersPage() {
         <button
             onClick={() => setCreateModalOpen(true)}
             className="
-            rounded-lg bg-blue-600
-            px-4 py-2 text-white
-            hover:bg-blue-700
+            px-4 py-2 text-sm font-medium text-white
+            bg-blue-700 hover:bg-blue-800
+            transition-colors
             "
         >
             Create User

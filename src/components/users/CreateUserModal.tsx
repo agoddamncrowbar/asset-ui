@@ -55,23 +55,23 @@ export default function CreateUserModal({
       className="
         fixed inset-0 z-50
         flex items-center justify-center
-        bg-black/40 p-4
+        bg-slate-900/40 p-4
       "
     >
       <div
         className="
           w-full max-w-2xl
-          rounded-xl bg-white shadow-xl
+          bg-white border border-slate-200
         "
       >
-        <div className="flex items-center justify-between border-b p-5">
-          <h2 className="text-lg font-semibold">
+        <div className="flex items-center justify-between border-b border-slate-200 p-5">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">
             Create User
           </h2>
 
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-900"
+            className="text-slate-400 hover:text-slate-900 transition-colors"
           >
             ✕
           </button>
@@ -79,7 +79,7 @@ export default function CreateUserModal({
 
         <div className="grid gap-4 p-5 md:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               University ID
             </label>
 
@@ -88,12 +88,12 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("university_id", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Role
             </label>
 
@@ -102,7 +102,7 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("role", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             >
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
@@ -112,7 +112,7 @@ export default function CreateUserModal({
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               First Name
             </label>
 
@@ -121,12 +121,12 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("first_name", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Last Name
             </label>
 
@@ -135,12 +135,12 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("last_name", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Email
             </label>
 
@@ -150,12 +150,12 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("email", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Phone
             </label>
 
@@ -164,12 +164,12 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("phone", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
 
           <div className="md:col-span-2">
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Password
             </label>
 
@@ -179,18 +179,19 @@ export default function CreateUserModal({
               onChange={(e) =>
                 updateField("password", e.target.value)
               }
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-600"
             />
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 border-t p-5">
+        <div className="flex justify-end gap-3 border-t border-slate-200 p-5">
           <button
             onClick={onClose}
             className="
-              rounded-lg border
-              px-4 py-2
-              hover:bg-slate-50
+              px-4 py-2 text-sm font-medium
+              border border-slate-300 text-slate-700
+              hover:border-blue-600 hover:bg-blue-50
+              transition-colors
             "
           >
             Cancel
@@ -200,10 +201,10 @@ export default function CreateUserModal({
             onClick={handleSubmit}
             disabled={loading}
             className="
-                rounded-lg bg-blue-600
-                px-4 py-2 text-white
-                hover:bg-blue-700
-                disabled:opacity-50
+                px-4 py-2 text-sm font-medium text-white
+                bg-blue-700 hover:bg-blue-800
+                disabled:opacity-50 disabled:cursor-not-allowed
+                transition-colors
             "
             >
             {loading ? "Creating..." : "Create User"}
