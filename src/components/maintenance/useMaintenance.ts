@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { MaintenanceJob } from "../../api/maintenance";
+import type { MaintenanceJob } from "../../api/types/maintenance";
 import { getMaintenanceJobs } from "../../api/maintenanceService";
 
 interface Props {

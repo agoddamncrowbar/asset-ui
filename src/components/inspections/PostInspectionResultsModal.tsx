@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../ui/Modal";
 import { useAuth } from "../../auth/useAuth";
-import type { Inspection } from "../../api/inspection";
+import type { Inspection } from "../../api/types/inspection";
 import { recordInspectionResult } from "../../api/inspectionService";
 
 import InspectionAssetCard from "./InspectionAssetCard";
@@ -12,6 +12,7 @@ interface Props {
   inspection: Inspection | null;
   onClose: () => void;
   onSaved: () => void;
+  currentUserId: number;
 }
 
 export default function PostInspectionResultsModal({
@@ -19,6 +20,7 @@ export default function PostInspectionResultsModal({
   inspection,
   onClose,
   onSaved,
+  currentUserId,
 }: Props) {
   const { token } = useAuth();
   const [saving, setSaving] = useState(false);
@@ -34,35 +36,72 @@ export default function PostInspectionResultsModal({
     token: token!,
   });
 
-  async function handleSave() {
-    if (!inspection) return;
+async function handleSave() {
+  console.log("Save button clicked");
 
-    try {
-      setSaving(true);
-
-      await Promise.all(
-        assets.map((asset) =>
-          recordInspectionResult(
-            inspection.id,
-            asset.id,
-            forms[asset.id],
-            token!
-          )
-        )
-      );
-
-      onSaved();
-      onClose();
-    } catch (err) {
-      alert(
-        err instanceof Error
-          ? err.message
-          : "Failed to record inspection results."
-      );
-    } finally {
-      setSaving(false);
-    }
+  if (!inspection) {
+    console.log("No inspection selected");
+    return;
   }
+
+  console.log("Inspection:", inspection);
+  console.log("Assets:", assets);
+  console.log("Forms:", forms);
+
+  try {
+    setSaving(true);
+
+    const requests = assets.map((asset) => {
+      const form = forms[asset.id];
+
+      console.log(`Preparing payload for asset ${asset.id}`, form);
+
+      const payload = {
+        result: form.result,
+        condition_after: form.condition_after,
+        remarks: form.remarks,
+
+        requires_maintenance:
+            form.result === "damaged" ||
+            form.result === "needs_repair",
+
+        maintenance_priority: form.maintenance_priority,
+        assigned_to: form.assigned_to ?? undefined,
+
+        user_id: currentUserId,
+    };
+
+      console.log("Payload:", payload);
+
+      return recordInspectionResult(
+        inspection.id,
+        asset.id,
+        payload,
+        token!
+      );
+    });
+
+    console.log("Sending requests...", requests.length);
+
+    const responses = await Promise.all(requests);
+
+    console.log("Responses:", responses);
+
+    onSaved();
+    onClose();
+  } catch (err) {
+    console.error("Error while saving inspection results:", err);
+
+    alert(
+      err instanceof Error
+        ? err.message
+        : "Failed to record inspection results."
+    );
+  } finally {
+    console.log("Finished saving");
+    setSaving(false);
+  }
+}
 
 return (
     <Modal

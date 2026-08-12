@@ -1,6 +1,6 @@
-import type { Category } from "../../api/category";
-import type { Department } from "../../api/department";
-import type { Location } from "../../api/location";
+import type { Category } from "../../api/types/category";
+import type { Department } from "../../api/types/department";
+import type { Location } from "../../api/types/location";
 
 /* ---------- Props ---------- */
 
@@ -32,6 +32,12 @@ interface Props {
   onAssetStatusChange: (value: string) => void;
 }
 
+const fieldClasses = `
+  border border-slate-200 px-3 py-2
+  text-sm text-slate-900
+  focus:outline-none focus:ring-1 focus:ring-slate-300
+`;
+
 export default function AssetsHeader({
   isAdmin,
   onCreate,
@@ -56,142 +62,126 @@ export default function AssetsHeader({
   onConditionChange,
   onAssetStatusChange,
 }: Props) {
-    return (
+  return (
     <div className="mb-6">
-        {/* ---------- Top Row ---------- */}
+      {/* ---------- Top Row ---------- */}
 
-        <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-blue-700">
-            Asset Inventory
+      <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-lg font-semibold tracking-tight text-slate-900">
+          Asset Inventory
         </h1>
 
         {isAdmin && (
-            <button
+          <button
             onClick={onCreate}
             className="
-                px-4 py-2 rounded
-                bg-blue-600 text-white
-                hover:bg-blue-700
+              w-full px-4 py-2 text-sm font-medium
+              bg-slate-900 text-white
+              hover:bg-slate-800
+              transition-colors
+              sm:w-auto
             "
-            >
+          >
             Create Asset
-            </button>
+          </button>
         )}
-        </div>
+      </div>
 
-        {/* ---------- Search & Filters ---------- */}
+      {/* ---------- Search & Filters ---------- */}
 
-        <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:flex lg:flex-wrap">
         <input
-            type="text"
-            value={search}
-            placeholder="Search assets..."
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="
-            min-w-62.5
-            flex-1
-            border rounded px-3 py-2
-            "
+          type="text"
+          value={search}
+          placeholder="Search assets..."
+          onChange={(e) => onSearchChange(e.target.value)}
+          className={`
+            ${fieldClasses}
+            placeholder:text-slate-400
+            sm:col-span-2
+            lg:min-w-62.5 lg:flex-1
+          `}
         />
 
         <select
-            value={categoryId ?? ""}
-            onChange={(e) =>
+          value={categoryId ?? ""}
+          onChange={(e) =>
             onCategoryChange(
-                e.target.value
-                ? Number(e.target.value)
-                : undefined
+              e.target.value ? Number(e.target.value) : undefined
             )
-            }
-            className="border rounded px-3 py-2"
+          }
+          className={fieldClasses}
         >
-            <option value="">All Categories</option>
+          <option value="">All Categories</option>
 
-            {categories.map((category) => (
-            <option
-                key={category.id}
-                value={category.id}
-            >
-                {category.name}
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
             </option>
-            ))}
+          ))}
         </select>
 
         <select
-            value={departmentId ?? ""}
-            onChange={(e) =>
+          value={departmentId ?? ""}
+          onChange={(e) =>
             onDepartmentChange(
-                e.target.value
-                ? Number(e.target.value)
-                : undefined
+              e.target.value ? Number(e.target.value) : undefined
             )
-            }
-            className="border rounded px-3 py-2"
+          }
+          className={fieldClasses}
         >
-            <option value="">All Departments</option>
+          <option value="">All Departments</option>
 
-            {departments.map((department) => (
-            <option
-                key={department.id}
-                value={department.id}
-            >
-                {department.name}
+          {departments.map((department) => (
+            <option key={department.id} value={department.id}>
+              {department.name}
             </option>
-            ))}
+          ))}
         </select>
 
         <select
-            value={locationId ?? ""}
-            onChange={(e) =>
+          value={locationId ?? ""}
+          onChange={(e) =>
             onLocationChange(
-                e.target.value
-                ? Number(e.target.value)
-                : undefined
+              e.target.value ? Number(e.target.value) : undefined
             )
-            }
-            className="border rounded px-3 py-2"
+          }
+          className={fieldClasses}
         >
-            <option value="">All Locations</option>
+          <option value="">All Locations</option>
 
-            {locations.map((location) => (
-            <option
-                key={location.id}
-                value={location.id}
-            >
-                {location.name}
+          {locations.map((location) => (
+            <option key={location.id} value={location.id}>
+              {location.name}
             </option>
-            ))}
+          ))}
         </select>
 
         <select
-            value={conditionStatus}
-            onChange={(e) =>
-            onConditionChange(e.target.value)
-            }
-            className="border rounded px-3 py-2"
+          value={conditionStatus}
+          onChange={(e) => onConditionChange(e.target.value)}
+          className={fieldClasses}
         >
-            <option value="">All Conditions</option>
-            <option value="excellent">Excellent</option>
-            <option value="good">Good</option>
-            <option value="fair">Fair</option>
-            <option value="poor">Poor</option>
-            <option value="damaged">Damaged</option>
+          <option value="">All Conditions</option>
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="fair">Fair</option>
+          <option value="poor">Poor</option>
+          <option value="damaged">Damaged</option>
         </select>
 
         <select
-            value={assetStatus}
-            onChange={(e) =>
-            onAssetStatusChange(e.target.value)
-            }
-            className="border rounded px-3 py-2"
+          value={assetStatus}
+          onChange={(e) => onAssetStatusChange(e.target.value)}
+          className={fieldClasses}
         >
-            <option value="">All Statuses</option>
-            <option value="available">Available</option>
-            <option value="assigned">Assigned</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="retired">Retired</option>
+          <option value="">All Statuses</option>
+          <option value="available">Available</option>
+          <option value="assigned">Assigned</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="retired">Retired</option>
         </select>
-        </div>
+      </div>
     </div>
-    );
+  );
 }

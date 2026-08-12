@@ -61,16 +61,16 @@ export default function CreateLocationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-lg rounded-xl bg-white shadow-xl">
-        <div className="border-b p-5">
-          <h2 className="text-lg font-semibold">
+      <div className="w-full max-w-lg border border-slate-200 bg-white overflow-hidden">
+        <div className="border-b border-slate-200 px-4 py-3">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">
             Create Location
           </h2>
         </div>
 
-        <div className="space-y-4 p-5">
+        <div className="space-y-4 px-4 py-4">
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Location Name
             </label>
 
@@ -85,16 +85,16 @@ export default function CreateLocationModal({
               }
               placeholder="Software Lab"
               className="
-                w-full rounded-lg border
-                border-slate-300 px-3 py-2
-                focus:border-blue-500
-                focus:outline-none
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900 placeholder:text-slate-400
+                transition-colors
+                focus:outline-none focus:border-blue-400
               "
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Building
             </label>
 
@@ -109,16 +109,16 @@ export default function CreateLocationModal({
               }
               placeholder="Lilian Beam"
               className="
-                w-full rounded-lg border
-                border-slate-300 px-3 py-2
-                focus:border-blue-500
-                focus:outline-none
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900 placeholder:text-slate-400
+                transition-colors
+                focus:outline-none focus:border-blue-400
               "
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Room Number
             </label>
 
@@ -133,16 +133,16 @@ export default function CreateLocationModal({
               }
               placeholder="SLAB"
               className="
-                w-full rounded-lg border
-                border-slate-300 px-3 py-2
-                focus:border-blue-500
-                focus:outline-none
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900 placeholder:text-slate-400
+                transition-colors
+                focus:outline-none focus:border-blue-400
               "
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Description
             </label>
 
@@ -157,22 +157,26 @@ export default function CreateLocationModal({
               }
               placeholder="Software computer lab used for testing and development"
               className="
-                w-full rounded-lg border
-                border-slate-300 px-3 py-2
-                focus:border-blue-500
-                focus:outline-none
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900 placeholder:text-slate-400
+                transition-colors
+                focus:outline-none focus:border-blue-400
               "
             />
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 border-t p-5">
+        <div className="flex justify-end gap-2 border-t border-slate-200 px-4 py-3">
           <button
             onClick={onClose}
             disabled={loading}
             className="
-              rounded-lg border
-              px-4 py-2 hover:bg-slate-50
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
             "
           >
             Cancel
@@ -182,10 +186,12 @@ export default function CreateLocationModal({
             onClick={handleSubmit}
             disabled={loading}
             className="
-              rounded-lg bg-blue-600
-              px-4 py-2 text-white
-              hover:bg-blue-700
-              disabled:opacity-50
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
             "
           >
             {loading

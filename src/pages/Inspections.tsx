@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 
-import type { Inspection } from "../api/inspection";
+import type { Inspection } from "../api/types/inspection";
 
 import {
   cancelInspection,
@@ -162,6 +162,7 @@ export default function Inspections() {
       <PostInspectionResultsModal
         isOpen={showResultsModal}
         inspection={selectedInspection}
+        currentUserId={user!.id}
         onClose={() => {
           setShowResultsModal(false);
           setSelectedInspection(null);

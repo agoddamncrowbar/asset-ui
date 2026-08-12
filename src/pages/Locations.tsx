@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 
-import type { Location } from "../api/location";
+import type { Location } from "../api/types/location";
 
 import {
   getLocations,
@@ -98,13 +98,13 @@ export default function LocationsPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="mx-auto max-w-7xl p-6">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">
+            <h1 className="text-sm font-semibold tracking-tight text-slate-900">
               Locations
             </h1>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-xs font-medium text-slate-400">
               Manage asset locations.
             </p>
           </div>
@@ -114,9 +114,11 @@ export default function LocationsPage() {
               setCreateModalOpen(true)
             }
             className="
-              rounded-lg bg-blue-600
-              px-4 py-2 text-white
-              hover:bg-blue-700
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
             "
           >
             Create Location

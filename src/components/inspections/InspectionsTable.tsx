@@ -1,4 +1,4 @@
-import type { Inspection } from "../../api/inspection";
+import type { Inspection } from "../../api/types/inspection";
 
 interface Props {
   inspections: Inspection[];

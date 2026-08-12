@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
-import type {  MaintenanceJob,  MaintenancePriority,  MaintenanceStatus, } from "../../api/maintenance";
+import type {  MaintenanceJob,  MaintenancePriority,  MaintenanceStatus, } from "../../api/types/maintenance";
 import {  ApiError,  completeMaintenanceJob,  startMaintenanceJob,  updateMaintenanceJob,} from "../../api/maintenanceService";
 import {  MaintenancePriorityBadge,  MaintenanceStatusBadge,} from ".";
 
@@ -22,7 +22,8 @@ export default function MaintenanceDetailsModal({
   onUnauthorized,
 }: Props) {
   const [saving, setSaving] = useState(false);
-
+  const [isFixed, setIsFixed] = useState(false);
+  const [isNotReparable, setIsNotReparable] = useState(false);
   const [status, setStatus] =
     useState<MaintenanceStatus>("queued");
 
@@ -41,10 +42,26 @@ export default function MaintenanceDetailsModal({
     setStatus(job.status);
     setPriority(job.priority);
     setIssueReport(job.issue_report);
-    setResolutionNotes(
-      job.resolution_notes ?? ""
-    );
+
+    const notes = job.resolution_notes ?? "";
+
+    setResolutionNotes(notes);
+    setIsFixed(notes === "fixed");
+    setIsNotReparable(notes === "not_repairable");
   }, [job]);
+  useEffect(() => {
+    if (isFixed) {
+      setResolutionNotes("fixed");
+      setIsNotReparable(false);
+    }
+  }, [isFixed]);
+
+  useEffect(() => {
+    if (isNotReparable) {
+      setResolutionNotes("not_repairable");
+      setIsFixed(false);
+    }
+  }, [isNotReparable]);
 
   if (!job) return null;
   const currentJob = job;
@@ -133,9 +150,9 @@ export default function MaintenanceDetailsModal({
       onClose={onClose}
       title={`Maintenance Job #${job.id}`}
     >
-      <div className="space-y-5">
+      <div className="space-y-4">
 
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <MaintenanceStatusBadge
             status={status}
           />
@@ -146,25 +163,58 @@ export default function MaintenanceDetailsModal({
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Issue Report
           </label>
 
-          <textarea
-            rows={4}
-            value={issueReport}
-            disabled={
-              status === "completed"
-            }
-            onChange={(e) =>
-              setIssueReport(e.target.value)
-            }
-            className="w-full rounded border px-3 py-2"
-          />
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input
+                type="checkbox"
+                checked={isFixed}
+                disabled={status === "completed"}
+                onChange={(e) => setIsFixed(e.target.checked)}
+                className="h-3.5 w-3.5 border-slate-300 accent-blue-600"
+              />
+              Asset repaired (mark as Fixed)
+            </label>
+
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input
+                type="checkbox"
+                checked={isNotReparable}
+                disabled={status === "completed"}
+                onChange={(e) =>
+                  setIsNotReparable(e.target.checked)
+                }
+                className="h-3.5 w-3.5 border-slate-300 accent-blue-600"
+              />
+              Asset is not reparable
+            </label>
+
+            {!isFixed && !isNotReparable && (
+              <textarea
+                rows={4}
+                value={resolutionNotes}
+                disabled={status === "completed"}
+                onChange={(e) =>
+                  setResolutionNotes(e.target.value)
+                }
+                placeholder="Enter resolution notes..."
+                className="
+                  w-full border border-slate-200 px-3 py-2
+                  text-sm text-slate-900 placeholder:text-slate-400
+                  transition-colors
+                  focus:outline-none focus:border-blue-400
+                  disabled:bg-slate-50 disabled:text-slate-400
+                "
+              />
+            )}
+</div>
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
             Priority
           </label>
 
@@ -179,7 +229,13 @@ export default function MaintenanceDetailsModal({
                   .value as MaintenancePriority
               )
             }
-            className="w-full rounded border px-3 py-2"
+            className="
+              w-full border border-slate-200 px-3 py-2
+              text-sm text-slate-900
+              transition-colors
+              focus:outline-none focus:border-blue-400
+              disabled:bg-slate-50 disabled:text-slate-400
+            "
           >
             <option value="low">
               Low
@@ -198,7 +254,7 @@ export default function MaintenanceDetailsModal({
         {(status === "in_progress" ||
           status === "completed") && (
           <div>
-            <label className="block mb-1 font-medium">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Resolution Notes
             </label>
 
@@ -213,17 +269,29 @@ export default function MaintenanceDetailsModal({
                   e.target.value
                 )
               }
-              className="w-full rounded border px-3 py-2"
+              className="
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900
+                transition-colors
+                focus:outline-none focus:border-blue-400
+                disabled:bg-slate-50 disabled:text-slate-400
+              "
             />
           </div>
         )}
 
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-2 border-t border-slate-200 pt-4">
 
           <button
             type="button"
             onClick={onClose}
-            className="rounded border px-4 py-2"
+            className="
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+            "
           >
             Close
           </button>
@@ -232,7 +300,14 @@ export default function MaintenanceDetailsModal({
             <button
               onClick={handleStart}
               disabled={saving}
-              className="rounded bg-blue-600 px-4 py-2 text-white"
+              className="
+                px-3 py-1.5 border border-slate-200
+                text-xs font-semibold uppercase tracking-wide
+                text-slate-600
+                transition-colors
+                hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+                disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+              "
             >
               Start Job
             </button>
@@ -244,7 +319,14 @@ export default function MaintenanceDetailsModal({
               <button
                 onClick={handleUpdate}
                 disabled={saving}
-                className="rounded bg-amber-500 px-4 py-2 text-white"
+                className="
+                  px-3 py-1.5 border border-slate-200
+                  text-xs font-semibold uppercase tracking-wide
+                  text-slate-600
+                  transition-colors
+                  hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+                  disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+                "
               >
                 Save Changes
               </button>
@@ -254,7 +336,14 @@ export default function MaintenanceDetailsModal({
                   handleComplete
                 }
                 disabled={saving}
-                className="rounded bg-green-600 px-4 py-2 text-white"
+                className="
+                  px-3 py-1.5 border border-yellow-400
+                  text-xs font-semibold uppercase tracking-wide
+                  text-slate-700
+                  transition-colors
+                  hover:bg-yellow-50
+                  disabled:opacity-40 disabled:hover:bg-transparent
+                "
               >
                 Complete Job
               </button>

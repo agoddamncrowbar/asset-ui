@@ -1,4 +1,4 @@
-import type { Department } from "./department";
+import type { Department } from "./types/department";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

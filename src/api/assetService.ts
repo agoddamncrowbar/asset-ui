@@ -1,5 +1,5 @@
-import type { Asset } from "./assets";
-import type { AssetSearchFilters, UpdateAssetPayload } from "./assets";
+import type { Asset } from "./types/assets";
+import type { AssetSearchFilters, UpdateAssetPayload } from "./types/assets";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

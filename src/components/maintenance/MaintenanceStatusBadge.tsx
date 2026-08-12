@@ -1,4 +1,4 @@
-import type { MaintenanceStatus } from "../../api/maintenance";
+import type { MaintenanceStatus } from "../../api/types/maintenance";
 
 interface Props {
   status: MaintenanceStatus;

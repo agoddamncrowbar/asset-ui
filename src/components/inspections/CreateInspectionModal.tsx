@@ -3,7 +3,7 @@ import Modal from "../ui/Modal";
 import { createInspection } from "../../api/inspectionService";
 import { useAuth } from "../../auth/useAuth";
 import { searchAssets } from "../../api/assetService";
-import type { Asset } from "../../api/assets";
+import type { Asset } from "../../api/types/assets";
 
 interface Props {
   isOpen: boolean;

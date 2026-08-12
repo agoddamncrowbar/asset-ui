@@ -1,4 +1,4 @@
-import type { Category } from "./category";
+import type { Category } from "./types/category";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

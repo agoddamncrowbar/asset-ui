@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../auth/useAuth";
-import type { MaintenanceJob } from "../api/maintenance";
+import type { MaintenanceJob } from "../api/types/maintenance";
 import { useMaintenance } from "../components/maintenance/useMaintenance";
 import {
   AccessDeniedModal,

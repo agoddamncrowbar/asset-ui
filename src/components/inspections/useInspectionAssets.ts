@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Asset } from "../../api/assets";
-import type { Inspection } from "../../api/inspection";
+import type { Asset } from "../../api/types/assets";
+import type { Inspection } from "../../api/types/inspection";
 import type { AssetInspectionForm } from "./types";
 
 import {
@@ -60,7 +60,7 @@ export function useInspectionAssets({
 
           maintenance_priority: "medium",
           assigned_to: null,
-
+          requires_maintenance: false,
           search: "",
           searchResults: [],
         };

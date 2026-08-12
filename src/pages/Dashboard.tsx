@@ -53,7 +53,6 @@ const modules = [
     name: "Maintenance",
     path: "/maintenance",
     description: "Asset Maintenance",
-    adminOnly: true,
   }
 ];
 
@@ -68,11 +67,18 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-blue-700">
-            Asset Management Dashboard
-          </h1>
+      <div className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between">
+        <h1 className="text-xl font-semibold text-blue-700">
+          Asset Management Dashboard
+        </h1>
 
+        <div className="flex items-center gap-3">
+          <Link
+            to={"/reports"}
+            className="text-sm font-medium text-slate-600 hover:text-blue-700 px-4 py-2 border border-slate-300 hover:border-blue-600 hover:bg-blue-50 transition-colors"
+          >
+            Reports
+          </Link>
           <Link
             to={"/audits"}
             className="text-sm font-medium text-slate-600 hover:text-blue-700 px-4 py-2 border border-slate-300 hover:border-blue-600 hover:bg-blue-50 transition-colors"
@@ -80,6 +86,7 @@ export default function Dashboard() {
             Audits
           </Link>
         </div>
+      </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-10">

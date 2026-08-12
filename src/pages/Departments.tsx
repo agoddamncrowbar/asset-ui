@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 
-import type { Department } from "../api/department";
+import type { Department } from "../api/types/department";
 
 import {
   getDepartments,

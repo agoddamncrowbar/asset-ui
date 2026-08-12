@@ -1,5 +1,5 @@
 import { http } from "./http";
-import type { Assignment, AssignmentResponse, ReturnAssignmentPayload } from "./assignments";
+import type { Assignment, AssignmentResponse, ReturnAssignmentPayload } from "./types/assignments";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

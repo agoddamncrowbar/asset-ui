@@ -39,3 +39,14 @@ export interface InspectionResultRecord {
   remarks: string;
   created_at: string;
 }
+export interface RecordInspectionResultPayload {
+  result: InspectionResult;
+  condition_after: AssetCondition;
+  remarks: string;
+
+  requires_maintenance: boolean;
+
+  maintenance_priority?: "low" | "medium" | "high";
+  assigned_to?: number;
+  user_id: number;
+}

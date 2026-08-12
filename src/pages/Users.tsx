@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import { getUser, getUsers, searchUsers } from "../api/userService";
-import type { User } from "../api/users";
+import type { User } from "../api/types/users";
 import { activateUser, suspendUser, createUser, deleteUser} from "../api/userService";
 import UserSearch from "../components/users/UserSearch";
 import UsersTable from "../components/users/UsersTable";
@@ -31,7 +31,7 @@ export default function UsersPage() {
         if (!confirmed) {
             return;
         }
-        
+
         if (user?.id === id) {
         alert("You cannot delete your own account.");
         return;

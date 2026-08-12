@@ -4,10 +4,10 @@ import Modal from "../ui/Modal";
 import type {
   Asset,
   UpdateAssetPayload,
-} from "../../api/assets";
-import type { Category } from "../../api/category";
-import type { Department } from "../../api/department";
-import type { Location } from "../../api/location";
+} from "../../api/types/assets";
+import type { Category } from "../../api/types/category";
+import type { Department } from "../../api/types/department";
+import type { Location } from "../../api/types/location";
 
 interface Props {
   open: boolean;

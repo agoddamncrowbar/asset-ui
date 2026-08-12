@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { searchUsers } from "../../api/userService";
-import type { User } from "../../api/users";
+import type { User } from "../../api/types/users";
 
 interface Props {
   token: string;
@@ -46,11 +46,16 @@ export default function UserAssignmentSearch({
           handleSearch(e.target.value)
         }
         placeholder="Search user..."
-        className="w-full border rounded px-3 py-2"
+        className="
+          w-full border border-slate-200 px-3 py-2
+          text-sm text-slate-900 placeholder:text-slate-400
+          transition-colors
+          focus:outline-none focus:border-blue-400
+        "
       />
 
       {results.length > 0 && (
-        <div className="absolute z-50 w-full bg-white border rounded shadow mt-1">
+        <div className="absolute z-50 w-full border border-slate-200 bg-white mt-1 overflow-hidden">
           {results.map((user) => (
             <button
               key={user.id}
@@ -62,7 +67,13 @@ export default function UserAssignmentSearch({
                   `${user.first_name} ${user.last_name}`
                 );
               }}
-              className="w-full text-left px-3 py-2 hover:bg-gray-100"
+              className="
+                w-full text-left px-3 py-2
+                text-sm font-medium text-slate-900
+                border-t border-slate-100 first:border-t-0
+                transition-colors
+                hover:bg-blue-50
+              "
             >
               {user.first_name}{" "}
               {user.last_name}

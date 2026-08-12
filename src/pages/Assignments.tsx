@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import AssignmentsTable from "../components/assignments/AssignmentsTable";
 import Pagination from "../components/assignments/Pagination";
 import { fetchAssignments, returnAssignment } from "../api/assignmentService";
-import type { Assignment, Pagination as PaginationType, } from "../api/assignments";
+import type { Assignment, Pagination as PaginationType, } from "../api/types/assignments";
 import ReturnAssignmentModal from "../components/assignments/ReturnAssignmentModal";
 import { useAuth } from "../auth/useAuth";
-import type { User } from "../api/users";
+import type { User } from "../api/types/users";
 
 import UserAssignmentSearch from "../components/assignments/UserAssignmentSearch";
 import { fetchUserAssignments } from "../api/assignmentService";

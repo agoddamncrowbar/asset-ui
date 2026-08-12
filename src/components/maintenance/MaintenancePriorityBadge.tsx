@@ -1,4 +1,4 @@
-import type { MaintenancePriority } from "../../api/maintenance";
+import type { MaintenancePriority } from "../../api/types/maintenance";
 
 interface Props {
   priority: MaintenancePriority;

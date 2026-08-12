@@ -1,4 +1,4 @@
-import type { Asset } from "../../api/assets";
+import type { Asset } from "../../api/types/assets";
 
 interface Props {
   assets: Asset[];
@@ -13,107 +13,148 @@ export default function AssetsTable({
   isAdmin,
   onView,
   onAssign,
-  onEdit
+  onEdit,
 }: Props) {
   return (
-    <div className="overflow-x-auto border border-blue-200 rounded-lg">
-      <table className="min-w-full text-sm">
-        <thead className="bg-blue-600 text-white">
-          <tr>
-            <th className="p-3 text-left">Tag</th>
-            <th className="p-3 text-left">Item</th>
-            <th className="p-3 text-left">Serial</th>
-            <th className="p-3 text-left">Status</th>
-            <th className="p-3 text-left">Condition</th>
-            <th className="p-3 text-left">Actions</th>
-          </tr>
-        </thead>
+    <div className="border border-slate-200 bg-white overflow-hidden">
+      <div className="border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+        <h2 className="text-sm font-semibold tracking-tight text-slate-900">
+          Assets
+        </h2>
+        <span className="text-xs font-medium text-slate-400">
+          {assets.length} total
+        </span>
+      </div>
 
-        <tbody>
-          {assets.map((asset, idx) => (
-            <tr
-              key={asset.id}
-              className={
-                idx % 2 === 0
-                  ? "bg-white"
-                  : "bg-yellow-50"
-              }
-            >
-              <td className="p-3 font-mono text-blue-700">
-                {asset.asset_tag}
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-200 bg-slate-50">
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Tag
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Item
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Serial
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Status
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Condition
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Actions
+              </th>
+            </tr>
+          </thead>
 
-              <td className="p-3">
-                {asset.item_name}
-              </td>
+          <tbody>
+            {assets.map((asset) => (
+              <tr
+                key={asset.id}
+                className="
+                  border-t border-slate-100
+                  hover:bg-blue-50
+                  transition-colors
+                "
+              >
+                <td className="px-4 py-3 font-mono text-slate-500">
+                  {asset.asset_tag}
+                </td>
 
-              <td className="p-3">
-                {asset.serial_number}
-              </td>
+                <td className="px-4 py-3 font-medium text-slate-900">
+                  {asset.item_name}
+                </td>
 
-              <td className="p-3">
-                <span
-                  className={`px-2 py-1 rounded text-xs font-semibold
-                    ${
-                      asset.asset_status === "available"
-                        ? "bg-blue-100 text-blue-700"
-                        : asset.asset_status ===
-                          "maintenance"
-                        ? "bg-yellow-200 text-yellow-800"
-                        : "bg-gray-200 text-gray-700"
-                    }`}
-                >
-                  {asset.asset_status}
-                </span>
-              </td>
+                <td className="px-4 py-3 text-slate-500">
+                  {asset.serial_number}
+                </td>
 
-              <td className="p-3">
-                {asset.condition_status}
-              </td>
-
-              <td className="p-3">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => onView(asset)}
-                    className="
-                      px-3 py-1 text-xs
-                      bg-blue-600 text-white
-                      rounded hover:bg-blue-700
-                    "
+                <td className="px-4 py-3">
+                  <span
+                    className={`
+                      inline-flex items-center gap-1.5 px-2 py-0.5
+                      text-xs font-medium capitalize
+                      border
+                      ${
+                        asset.asset_status === "available"
+                          ? "border-yellow-400 text-slate-700"
+                          : asset.asset_status === "maintenance"
+                          ? "border-slate-300 text-slate-600"
+                          : "border-slate-200 text-slate-400"
+                      }
+                    `}
                   >
-                    View
-                  </button>
+                    <span
+                      className={`h-1.5 w-1.5 ${
+                        asset.asset_status === "available"
+                          ? "bg-yellow-400"
+                          : asset.asset_status === "maintenance"
+                          ? "bg-slate-400"
+                          : "bg-slate-300"
+                      }`}
+                    />
+                    {asset.asset_status}
+                  </span>
+                </td>
 
-                  {isAdmin && (
+                <td className="px-4 py-3 capitalize text-slate-600">
+                  {asset.condition_status}
+                </td>
+
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
                     <button
-                      onClick={() => onAssign(asset)}
+                      onClick={() => onView(asset)}
                       className="
-                        px-3 py-1 text-xs
-                        bg-yellow-400 text-black
-                        rounded hover:bg-yellow-500
+                        px-2.5 py-1 text-xs font-medium
+                        text-slate-600
+                        border border-slate-200
+                        hover:bg-slate-50
+                        transition-colors
                       "
                     >
-                      Assign
+                      View
                     </button>
-                  )}
 
-                  <button
-                    onClick={() => onEdit(asset)}
-                    className="
-                      px-3 py-1 text-xs
-                      border border-blue-600
-                      text-blue-600 rounded
-                      hover:bg-blue-50
-                    "
-                  >
-                    Edit
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    {isAdmin && asset.asset_status === "available" && (
+                      <button
+                        onClick={() => onAssign(asset)}
+                        className="
+                          px-2.5 py-1 text-xs font-medium
+                          text-slate-600
+                          border border-slate-200
+                          hover:bg-slate-50
+                          transition-colors
+                        "
+                      >
+                        Assign
+                      </button>
+                    )}
+                    {isAdmin && (
+                    <button
+                      onClick={() => onEdit(asset)}
+                      className="
+                        px-2.5 py-1 text-xs font-medium
+                        text-slate-600
+                        border border-slate-200
+                        hover:bg-slate-50
+                        transition-colors
+                      "
+                    >
+                      Edit
+                    </button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

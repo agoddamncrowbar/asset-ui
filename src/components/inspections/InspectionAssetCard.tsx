@@ -1,4 +1,4 @@
-import type { Asset } from "../../api/assets";
+import type { Asset } from "../../api/types/assets";
 import type { AssetInspectionForm } from "./types";
 import MaintenanceAssignment from "./MaintenanceAssignment";
 interface Props {

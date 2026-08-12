@@ -1,4 +1,4 @@
-import type { Location } from "../../api/location";
+import type { Location } from "../../api/types/location";
 
 interface Props {
   location: Location | null;
@@ -11,49 +11,69 @@ export default function LocationDetails({
 }: Props) {
   if (!location) {
     return (
-      <div className="rounded-lg border bg-white p-5">
+      <div className="border border-slate-200 bg-white px-4 py-6 text-sm text-slate-500">
         Select a location.
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg border bg-white p-5">
-      <h2 className="mb-4 font-medium">
-        Location Details
-      </h2>
+    <div className="border border-slate-200 bg-white overflow-hidden">
+      <div className="border-b border-slate-200 px-4 py-3">
+        <h2 className="text-sm font-semibold tracking-tight text-slate-900">
+          Location Details
+        </h2>
+      </div>
 
-      <div className="space-y-3 text-sm">
-        <div>
-          <strong>Name:</strong>{" "}
-          {location.name}
+      <div className="px-4 py-4 space-y-3 text-sm">
+        <div className="flex justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Name
+          </span>
+          <span className="font-medium text-slate-900">
+            {location.name}
+          </span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Building
+          </span>
+          <span className="text-slate-600">
+            {location.building}
+          </span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Room
+          </span>
+          <span className="text-slate-600">
+            {location.room_number}
+          </span>
         </div>
 
         <div>
-          <strong>Building:</strong>{" "}
-          {location.building}
-        </div>
-
-        <div>
-          <strong>Room:</strong>{" "}
-          {location.room_number}
-        </div>
-
-        <div>
-          <strong>Description:</strong>{" "}
-          {location.description}
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Description
+          </p>
+          <p className="text-slate-600">
+            {location.description}
+          </p>
         </div>
       </div>
 
-      <div className="mt-6 border-t pt-4">
+      <div className="border-t border-slate-200 px-4 py-3">
         <button
           onClick={() =>
             onDelete(location.id)
           }
           className="
-            rounded-lg bg-red-600
-            px-4 py-2 text-white
-            hover:bg-red-700
+            px-3 py-1.5 border border-red-200
+            text-xs font-semibold uppercase tracking-wide
+            text-red-600
+            transition-colors
+            hover:bg-red-50 hover:border-red-300
           "
         >
           Delete Location

@@ -15,6 +15,7 @@ import Requests from "./pages/Requests.tsx";
 import AssignmentsPage from "./pages/Assignments.tsx";
 import AppLoader from "./components/loading/AppLoader.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Reports from "./pages/Reports.tsx";
 export default function App() {
   return (
     <BrowserRouter>
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/audits" element={<Audits/>}/>
           <Route path="/users" element={<UsersPage />} />
           <Route path="/loading" element={<AppLoader/>}/>
+          <Route path="/reports" element={<Reports/>}/>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

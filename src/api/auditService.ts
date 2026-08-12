@@ -4,7 +4,7 @@ import type {
   AuditLog,
   AuditSummary,
   Pagination,
-} from "./audit";
+} from "./types/audit";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

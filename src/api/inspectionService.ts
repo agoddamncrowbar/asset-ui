@@ -1,9 +1,8 @@
 import type {
-  AssetCondition,
   Inspection,
-  InspectionResult,
   InspectionResultRecord,
-} from "./inspection";
+  RecordInspectionResultPayload,
+} from "./types/inspection";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -16,12 +15,6 @@ export interface CreateInspectionPayload {
 
 export interface CompleteInspectionPayload {
   user_id: number;
-}
-
-export interface RecordInspectionResultPayload {
-  result: InspectionResult;
-  condition_after: AssetCondition;
-  remarks: string;
 }
 
 /**
@@ -198,7 +191,7 @@ export async function recordInspectionResult(
 }
 
 /**
- * 
+ *
  * cancel inspections
  */
 export async function cancelInspection(

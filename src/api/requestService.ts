@@ -2,7 +2,7 @@ import type {
   AssetRequest,
   CreateRequestPayload,
   ApproveRequestPayload,
-} from "./requests";
+} from "./types/requests";
 
 
 const API_URL = import.meta.env.VITE_API_URL;

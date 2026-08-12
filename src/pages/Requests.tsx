@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 
-import type { Asset } from "../api/assets";
-import type { AssetRequest } from "../api/requests";
+import type { Asset } from "../api/types/assets";
+import type { AssetRequest } from "../api/types/requests";
 
 import { searchAssets } from "../api/assetService";
 import {
@@ -42,7 +42,7 @@ export default function Requests() {
   const [queue, setQueue] = useState<
     AssetRequest[]
   >([]);
-  
+
   const [approvingId, setApprovingId] = useState<number | null>(null);
   const isAdmin = user?.role?.toLowerCase() === "admin";
 
@@ -153,40 +153,43 @@ export default function Requests() {
   }
 
   return (
-    <div className="space-y-6 mx-5">
+    <div className="space-y-5 mx-5">
     {/* Header */}
-    <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold text-blue-700">
+    <div className="flex flex-col gap-1">
+        <h1 className="text-sm font-semibold tracking-tight text-slate-900">
         Asset Requests
         </h1>
 
-        <p className="text-gray-500">
+        <p className="text-xs font-medium text-slate-400">
         Search assigned assets and submit transfer requests.
         </p>
     </div>
 
     {/* Search Card */}
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-            <h2 className="text-lg font-semibold text-gray-800">
+    <div className="border border-slate-200 bg-white overflow-hidden">
+        <div className="border-b border-slate-200 px-4 py-3">
+          <h2 className="text-sm font-semibold tracking-tight text-slate-900">
             Search Assets
-            </h2>
+          </h2>
 
-            <p className="text-sm text-gray-500">
+          <p className="mt-0.5 text-xs font-medium text-slate-400">
             Only assets currently assigned to users are shown.
-            </p>
+          </p>
         </div>
 
-        <div className="w-full lg:w-96">
-            <input
+        <div className="px-4 py-4">
+          <input
             type="text"
             placeholder="Search by asset tag, serial number or item name..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-            />
-        </div>
+            className="
+              w-full border border-slate-200 px-3 py-2
+              text-sm text-slate-900 placeholder:text-slate-400
+              transition-colors
+              focus:outline-none focus:border-blue-400
+            "
+          />
         </div>
     </div>
 

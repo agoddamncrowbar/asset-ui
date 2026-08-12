@@ -1,7 +1,7 @@
 import {  useState } from "react";
 import Modal from "../ui/Modal";
-import type {  User } from "../../api/users";
-import type { Asset } from "../../api/assets";
+import type {  User } from "../../api/types/users";
+import type { Asset } from "../../api/types/assets";
 import { useAuth } from "../../auth/useAuth";
 import { createAssignment } from "../../api/assignmentService";
 import { searchUsers } from "../../api/userService";

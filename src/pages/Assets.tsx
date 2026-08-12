@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { searchAssets, fetchAssets, updateAsset, createAsset, type CreateAssetPayload, } from "../api/assetService";
-import type { Asset, UpdateAssetPayload } from "../api/assets";
+import type { Asset, UpdateAssetPayload } from "../api/types/assets";
 import AppLoader from "../components/loading/AppLoader";
 
 import { useAuth } from "../auth/useAuth";
@@ -16,9 +16,9 @@ import { getCategories,} from "../api/categoryService";
 import { getDepartments,} from "../api/departmentService";
 import { getLocations,} from "../api/locationService";
 
-import type { Category } from "../api/category";
-import type { Department } from "../api/department";
-import type { Location } from "../api/location";
+import type { Category } from "../api/types/category";
+import type { Department } from "../api/types/department";
+import type { Location } from "../api/types/location";
 
 
 export default function AssetsPage() {
@@ -33,12 +33,10 @@ export default function AssetsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuth();
 
-
   const [editOpen, setEditOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editAsset, setEditAsset] = useState<Asset | null>(null);
-  
-  
+
   const [createOpen, setCreateOpen] = useState(false);
   const [creating, setCreating] = useState(false);
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
-import type { Asset } from "../../api/assets";
+import type { Asset } from "../../api/types/assets";
 
 interface Props {
   isOpen: boolean;
@@ -41,7 +41,14 @@ export default function RequestAssetModal({
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+            className="
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+            "
           >
             Cancel
           </button>
@@ -49,7 +56,14 @@ export default function RequestAssetModal({
           <button
             onClick={handleSubmit}
             disabled={loading || !reason.trim()}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            className="
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+            "
           >
             {loading ? "Submitting..." : "Submit Request"}
           </button>
@@ -58,26 +72,40 @@ export default function RequestAssetModal({
     >
       {asset && (
         <div className="space-y-4">
-          <div className="rounded bg-gray-50 border p-4">
+          <div className="border border-slate-200 p-4">
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <span className="font-semibold">Asset Tag:</span>
-                <div>{asset.asset_tag}</div>
+                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Asset Tag
+                </span>
+                <div className="mt-0.5 font-medium text-slate-900">
+                  {asset.asset_tag}
+                </div>
               </div>
 
               <div>
-                <span className="font-semibold">Item:</span>
-                <div>{asset.item_name}</div>
+                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Item
+                </span>
+                <div className="mt-0.5 text-slate-600">
+                  {asset.item_name}
+                </div>
               </div>
 
               <div>
-                <span className="font-semibold">Serial Number:</span>
-                <div>{asset.serial_number}</div>
+                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Serial Number
+                </span>
+                <div className="mt-0.5 font-mono text-slate-500">
+                  {asset.serial_number}
+                </div>
               </div>
 
               <div>
-                <span className="font-semibold">Condition:</span>
-                <div className="capitalize">
+                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Condition
+                </span>
+                <div className="mt-0.5 capitalize text-slate-600">
                   {asset.condition_status.replace("_", " ")}
                 </div>
               </div>
@@ -85,7 +113,7 @@ export default function RequestAssetModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
               Reason for Request
             </label>
 
@@ -94,7 +122,12 @@ export default function RequestAssetModal({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Describe why you need this asset..."
-              className="w-full border rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="
+                w-full border border-slate-200 px-3 py-2
+                text-sm text-slate-900 placeholder:text-slate-400
+                transition-colors
+                focus:outline-none focus:border-blue-400
+              "
             />
           </div>
         </div>

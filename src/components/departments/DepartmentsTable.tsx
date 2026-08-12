@@ -1,4 +1,4 @@
-import type { Department } from "../../api/department";
+import type { Department } from "../../api/types/department";
 
 interface Props {
   departments: Department[];

@@ -1,4 +1,4 @@
-import type { MaintenanceJob } from "../../api/maintenance";
+import type { MaintenanceJob } from "../../api/types/maintenance";
 import MaintenanceCard from "./MaintenanceCard";
 
 interface Props {

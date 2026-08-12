@@ -1,4 +1,4 @@
-import type { User } from "../../api/users";
+import type { User } from "../../api/types/users";
 import UserActions from "./UserActions";
 
 interface Props {

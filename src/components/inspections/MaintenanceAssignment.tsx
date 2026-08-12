@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { User } from "../../api/users";
+import type { User } from "../../api/types/users";
 import { searchUsers } from "../../api/userService";
 import type { AssetInspectionForm } from "./types";
 
@@ -81,10 +81,10 @@ export default function MaintenanceAssignment({
             }
             placeholder="Search by university ID or name..."
             className="
-            flex-1 border border-slate-300
-            bg-white px-4 py-2
-            text-sm outline-none
-            focus:border-blue-600
+              flex-1 border border-slate-300
+              bg-white px-4 py-2
+              text-sm outline-none
+              focus:border-blue-600
             "
         />
 
@@ -93,13 +93,13 @@ export default function MaintenanceAssignment({
             onClick={handleSearch}
             disabled={loading}
             className="
-            px-5 py-2
-            text-sm font-medium text-white
-            bg-blue-700
-            hover:bg-blue-800
-            disabled:cursor-not-allowed
-            disabled:opacity-50
-            transition-colors
+              px-5 py-2
+              text-sm font-medium text-white
+              bg-blue-700
+              hover:bg-blue-800
+              disabled:cursor-not-allowed
+              disabled:opacity-50
+              transition-colors
             "
         >
             {loading ? "Searching..." : "Search"}

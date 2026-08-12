@@ -1,4 +1,4 @@
-import type { Location } from "../../api/location";
+import type { Location } from "../../api/types/location";
 
 interface Props {
   locations: Location[];
@@ -12,58 +12,64 @@ export default function LocationsTable({
   onSelect,
 }: Props) {
   return (
-    <div className="rounded-lg border bg-white overflow-hidden">
-      <div className="border-b px-4 py-3">
-        <h2 className="font-medium">
-          Locations ({locations.length})
+    <div className="border border-slate-200 bg-white overflow-hidden">
+      <div className="border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+        <h2 className="text-sm font-semibold tracking-tight text-slate-900">
+          Locations
         </h2>
+        <span className="text-xs font-medium text-slate-400">
+          {locations.length} total
+        </span>
       </div>
 
       {loading ? (
-        <div className="p-6">Loading...</div>
+        <div className="p-6 text-sm text-slate-500">Loading...</div>
       ) : (
-        <table className="w-full text-sm">
-          <thead className="bg-slate-100">
-            <tr>
-              <th className="px-4 py-3 text-left">
-                Name
-              </th>
-              <th className="px-4 py-3 text-left">
-                Building
-              </th>
-              <th className="px-4 py-3 text-left">
-                Room
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {locations.map((location) => (
-              <tr
-                key={location.id}
-                onClick={() =>
-                  onSelect(location.id)
-                }
-                className="
-                  cursor-pointer border-t
-                  hover:bg-slate-50
-                "
-              >
-                <td className="px-4 py-3">
-                  {location.name}
-                </td>
-
-                <td className="px-4 py-3">
-                  {location.building}
-                </td>
-
-                <td className="px-4 py-3">
-                  {location.room_number}
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-50">
+                <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Name
+                </th>
+                <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Building
+                </th>
+                <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Room
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {locations.map((location) => (
+                <tr
+                  key={location.id}
+                  onClick={() =>
+                    onSelect(location.id)
+                  }
+                  className="
+                    cursor-pointer border-t border-slate-100
+                    hover:bg-blue-50
+                    transition-colors
+                  "
+                >
+                  <td className="px-4 py-3 font-medium text-slate-900">
+                    {location.name}
+                  </td>
+
+                  <td className="px-4 py-3 text-slate-600">
+                    {location.building}
+                  </td>
+
+                  <td className="px-4 py-3 text-slate-500">
+                    {location.room_number}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

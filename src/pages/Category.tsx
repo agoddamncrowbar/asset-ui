@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 
-import type { Category } from "../api/category";
+import type { Category } from "../api/types/category";
 
 import {
   getCategories,

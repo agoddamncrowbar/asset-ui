@@ -15,7 +15,7 @@ import {
   exportAuditLogs,
 } from "../api/auditService";
 
-import type { AuditSummary, AuditLog } from "../api/audit";
+import type { AuditSummary, AuditLog } from "../api/types/audit";
 
 export default function Audits() {
   const { user, token } = useAuth();
@@ -144,22 +144,29 @@ export default function Audits() {
         onView={handleView}
       />
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between mt-4 text-sm">
-        <div className="text-gray-600">
+{/* Pagination */}
+      <div className="flex items-center justify-between border-t border-slate-200 px-4 py-3 text-sm">
+        <div className="text-xs font-medium text-slate-400">
           Total: {pagination.total}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <button
             onClick={prevPage}
             disabled={offset === 0}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+            "
           >
             Prev
           </button>
 
-          <span className="px-3 py-1">
+          <span className="px-2 text-xs font-medium text-slate-400">
             Page {offset / limit + 1}
           </span>
 
@@ -168,7 +175,14 @@ export default function Audits() {
             disabled={
               offset + limit >= pagination.total
             }
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="
+              px-3 py-1.5 border border-slate-200
+              text-xs font-semibold uppercase tracking-wide
+              text-slate-600
+              transition-colors
+              hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200
+              disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 disabled:hover:border-slate-200
+            "
           >
             Next
           </button>

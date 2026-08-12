@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 export default function Header() {
   const { user, token, logout, refreshUser } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isAdmin = user?.role?.toLowerCase() === "admin";
   const navItems = [
     { label: "Dashboard", href: "/" },
-    { label: "Assignments", href: "/assignments" },
+    { label: "Assignments", href: "/assignments", isAdmin: true },
     { label: "Requests", href: "/requests" },
     { label: "Assets", href: "/assets" },
   ];
+
   useEffect(() => {
     if (token && !user) {
       refreshUser();
@@ -34,12 +36,13 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
           {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
-              className="
-                relative px-3 py-2
-                text-slate-600
+            (item.isAdmin === undefined || item.isAdmin === isAdmin) && (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="
+                  relative px-3 py-2
+                  text-slate-600
                 hover:text-blue-700
                 hover:bg-blue-50
                 transition-colors
@@ -58,7 +61,7 @@ export default function Header() {
             >
               {item.label}
             </Link>
-          ))}
+          )))}
         </nav>
 
         {/* User */}
