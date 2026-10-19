@@ -3,7 +3,7 @@ import ButtonLoader from "../components/loading/ButtonLoader";
 import AppLoader from "../components/loading/AppLoader";
 import { useAuth } from "../auth/useAuth";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../images/logo.png";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -44,9 +44,9 @@ export default function LoginPage() {
       {/* Branding Panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#283B91] text-white flex-col justify-center items-center p-12">
         <img
-          src="./images/logo.png"
+          src={logo}
           alt="USIU Logo"
-          className="w-52 mb-8"
+          className="w-52 mb-8 bg-amber-50"
         />
 
         <h1 className="text-4xl font-bold text-center">

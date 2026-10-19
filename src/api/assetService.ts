@@ -2,6 +2,7 @@ import type { Asset } from "./types/assets";
 import type { AssetSearchFilters, UpdateAssetPayload } from "./types/assets";
 
 const API_URL = import.meta.env.VITE_API_URL;
+export const ASSET_FILE_BASE_URL = API_URL.replace(/\/api\/?$/, "");
 
 export interface CreateAssetPayload {
   item_name: string;
@@ -150,4 +151,60 @@ export async function updateAsset(
   }
 
   return json.data;
+}
+
+export async function uploadAssetImage(
+  assetId: number,
+  file: File,
+  token: string
+): Promise<Asset> {
+  const formData = new FormData();
+  formData.append("image", file);
+
+  const res = await fetch(
+    `${API_URL}/assets/${assetId}/image`,
+    {
+      method: "POST",
+      headers: {
+        // No Content-Type here — the browser sets the multipart boundary itself.
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      json.message ?? "Failed to upload asset image"
+    );
+  }
+
+  return json.data as Asset;
+}
+
+export async function deleteAssetImage(
+  assetId: number,
+  token: string
+): Promise<Asset> {
+  const res = await fetch(
+    `${API_URL}/assets/${assetId}/image`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      json.message ?? "Failed to remove asset image"
+    );
+  }
+
+  return json.data as Asset;
 }

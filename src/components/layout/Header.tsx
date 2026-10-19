@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/useAuth";
 import { Link } from "react-router-dom";
+import logo from "../../images/logo.png";
 export default function Header() {
   const { user, token, logout, refreshUser } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <Link to="/">
             <img
-              src="/images/logo.png"
+              src={logo}
               alt="logo"
               className="h-16 w-auto"
             />

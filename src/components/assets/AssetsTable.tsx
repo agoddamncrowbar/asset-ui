@@ -1,4 +1,5 @@
 import type { Asset } from "../../api/types/assets";
+import { ASSET_FILE_BASE_URL } from "../../api/assetService";
 
 interface Props {
   assets: Asset[];
@@ -31,6 +32,9 @@ export default function AssetsTable({
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50">
               <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Photo
+              </th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                 Tag
               </th>
               <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -61,6 +65,18 @@ export default function AssetsTable({
                   transition-colors
                 "
               >
+                <td className="px-4 py-3">
+                  {asset.image_path ? (
+                    <img
+                      src={`${ASSET_FILE_BASE_URL}/public${asset.image_path}`}
+                      alt={asset.item_name}
+                      className="h-10 w-10 border border-slate-200 object-cover"
+                    />
+                  ) : (
+                    <div className="h-10 w-10 border border-slate-200 bg-slate-50" />
+                  )}
+                </td>
+
                 <td className="px-4 py-3 font-mono text-slate-500">
                   {asset.asset_tag}
                 </td>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchAssets, fetchAssets, updateAsset, createAsset, type CreateAssetPayload, } from "../api/assetService";
+import { searchAssets, fetchAssets, updateAsset, createAsset, type CreateAssetPayload, uploadAssetImage, deleteAssetImage, } from "../api/assetService";
 import type { Asset, UpdateAssetPayload } from "../api/types/assets";
 import AppLoader from "../components/loading/AppLoader";
 
@@ -27,6 +27,7 @@ export default function AssetsPage() {
   const [assignAsset, setAssignAsset] = useState<Asset | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageActionLoading, setImageActionLoading] = useState(false);
   const { user } = useAuth();
   const isAdmin = user?.role?.toLowerCase() === "admin";
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
@@ -194,6 +195,57 @@ export default function AssetsPage() {
       console.error(err);
     }
   };
+  async function handleUploadAssetImage(file: File) {
+  if (!editAsset || !token) return;
+
+  try {
+    setImageActionLoading(true);
+
+    const updated = await uploadAssetImage(editAsset.id, file, token);
+
+    setAssets((current) =>
+      current.map((asset) =>
+        asset.id === updated.id ? updated : asset
+      )
+    );
+    setEditAsset(updated);
+  } catch (error) {
+    console.error(error);
+    alert(
+      error instanceof Error
+        ? error.message
+        : "Failed to upload image"
+    );
+  } finally {
+    setImageActionLoading(false);
+  }
+}
+
+async function handleDeleteAssetImage() {
+  if (!editAsset || !token) return;
+
+  try {
+    setImageActionLoading(true);
+
+    const updated = await deleteAssetImage(editAsset.id, token);
+
+    setAssets((current) =>
+      current.map((asset) =>
+        asset.id === updated.id ? updated : asset
+      )
+    );
+    setEditAsset(updated);
+  } catch (error) {
+    console.error(error);
+    alert(
+      error instanceof Error
+        ? error.message
+        : "Failed to remove image"
+    );
+  } finally {
+    setImageActionLoading(false);
+  }
+}
   if (loading) {
     return <AppLoader />;
   }
@@ -249,6 +301,9 @@ export default function AssetsPage() {
           setEditAsset(null);
         }}
         onSubmit={handleEditAsset}
+        onUploadImage={handleUploadAssetImage}
+        onDeleteImage={handleDeleteAssetImage}
+        imageActionLoading={imageActionLoading}
       />
       <CreateAssetModal
         open={createOpen}

@@ -45,7 +45,7 @@ export default function UserAssignmentSearch({
         onChange={(e) =>
           handleSearch(e.target.value)
         }
-        placeholder="Search user..."
+        placeholder="Search user ... "
         className="
           w-full border border-slate-200 px-3 py-2
           text-sm text-slate-900 placeholder:text-slate-400

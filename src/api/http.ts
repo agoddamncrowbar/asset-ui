@@ -17,6 +17,7 @@ export async function http<T>(endpoint: string, options: RequestInit = {}): Prom
   });
 
   if (!res.ok) {
+    console.error(`Request failed: ${res.status}`);
     throw new Error(`Request failed: ${res.status}`);
   }
 

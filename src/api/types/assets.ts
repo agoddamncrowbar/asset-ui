@@ -10,12 +10,12 @@ export interface Asset {
   purchase_date: string | null;
   purchase_cost: string | null;
   supplier: string | null;
+  image_path: string | null;   // NEW
   condition_status: string;
   asset_status: string;
   created_at: string;
   updated_at: string;
 }
-
 
 export interface AssetSearchFilters {
   q?: string;
